@@ -1,0 +1,62 @@
+[
+    {
+        "name": "Interior & Exterior Design",
+        "services": [
+            { "name": "Interior Design" },
+            { "name": "Exterior Design" },
+            { "name": "Landscape Design" },
+            { "name": "Mock Ups" },
+            { "name": "Hospitality" },
+            { "name": "Offices" },
+            { "name": "Sales Center" },
+            { "name": "Restaurants And Cafes" },
+            { "name": "Retail" },
+            { "name": "Medical" },
+            { "name": "Yachts" },
+            { "name": "Booths" },
+            { "name": "Finishing Matrix" }
+        ]
+    },
+    { "name": "Kitchen & Bathroom Remodelers" },
+    { "name": "Carpenters" },
+    { "name": "Electricians" },
+    { "name": "Appliances" },
+    {
+        "name": "Air Conditioning & Heating",
+        "services": [
+            { "name": "Centeral Air Conditioning" },
+            { "name": "Air Conditioning" }
+        ]
+    },
+    { "name": "Plumbers" },
+    { "name": "Door Dealers" },
+    {
+        "name": "Flooring Contractors",
+        "services": [
+            { "name": "Ceramic" },
+            { "name": "Borcaleen" },
+            { "name": "Barquee" },
+            { "name": "Stone" }
+        ]
+    },
+    { "name": "Window Contractors" },
+    { "name": "Furniture Repair & Upholstery" },
+    { "name": "Glass & Shower Door Dealers" },
+    { "name": "Ironwork" },
+    { "name": "Lighting" },
+    { "name": "Handyman" },
+    {
+        "name": "Painters & Wall Coverings",
+        "services": [
+            { "name": "Painters" },
+            { "name": "Wall Covering" },
+            { "name": "Panels" },
+            { "name": "Foteek" }
+        ]
+    },
+    { "name": "Movers" },
+    { "name": "Roofing & Gutters" },
+    { "name": "Gardeners & Lawn Care" },
+    { "name": "Spa & Pool Maintenance" },
+    { "name": "Tile, Stone & Countertops" }
+]

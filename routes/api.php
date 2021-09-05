@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\ProfessionalController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,5 +22,13 @@ Route::group(
         Route::post('login', [LoginController::class, 'login']);
         Route::post('register', [RegisterController::class, 'register']);
         Route::post('loginFB', [LoginController::class, 'loginFB']);
+    }
+);
+
+Route::group(
+    ['prefix' => 'professionals'],
+    static function () {
+        Route::post('/', [ProfessionalController::class, 'store']);
+        Route::get('/top-rated', [ProfessionalController::class, 'getTopRated']);
     }
 );

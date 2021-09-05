@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 
 class BaseRepository
 {
-    public function convertToSnakeCase(array $inputs): array
+    protected function convertToSnakeCase(array $inputs): array
     {
         foreach ($inputs as $key => $value) {
             unset($inputs[$key]);
