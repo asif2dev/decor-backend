@@ -26,4 +26,9 @@ class ProfessionalRepository extends BaseRepository
             ->take(5)
             ->get();
     }
+
+    public function getByUid(int $uid): ?Professional
+    {
+        return Professional::whereUid($uid)->first();
+    }
 }

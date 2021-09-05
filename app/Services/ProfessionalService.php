@@ -29,4 +29,9 @@ class ProfessionalService
     {
         return $this->professionalRepository->getTopRated();
     }
+
+    public function getByUid(int $uid): ?Professional
+    {
+        return $this->professionalRepository->getByUid($uid);
+    }
 }
