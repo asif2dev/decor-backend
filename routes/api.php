@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\ProfessionalController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,9 +27,16 @@ Route::group(
 );
 
 Route::group(
-    ['prefix' => 'professionals'],
+    ['prefix' => 'user', 'middleware' => 'auth:sanctum'],
+    static function () {
+        Route::get('/me', [UserController::class, 'getLoggedInUser']);
+    }
+);
+
+Route::get('/professionals/top-rated', [ProfessionalController::class, 'getTopRated']);
+Route::group(
+    ['prefix' => 'professionals', 'middleware' => 'auth:sanctum'],
     static function () {
         Route::post('/', [ProfessionalController::class, 'store']);
-        Route::get('/top-rated', [ProfessionalController::class, 'getTopRated']);
     }
 );
