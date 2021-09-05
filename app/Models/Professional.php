@@ -36,4 +36,9 @@ class Professional extends Model
     {
         return $this->belongsToMany(User::class, 'professional_users');
     }
+
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(ProfessionalReview::class);
+    }
 }

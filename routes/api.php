@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\ProfessionalController;
+use App\Http\Controllers\ProfessionalReviewController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -36,10 +37,12 @@ Route::group(
 
 Route::get('/professionals/top-rated', [ProfessionalController::class, 'getTopRated']);
 Route::get('/professionals/{professionalUid}/projects', [ProjectController::class, 'getProjects']);
+Route::get('professionals/{professionalUid}/reviews', [ProfessionalReviewController::class, 'getReviews']);
 Route::group(
     ['prefix' => 'professionals', 'middleware' => 'auth:sanctum'],
     static function () {
         Route::post('/{professionalUid}/projects', [ProjectController::class, 'store']);
+        Route::post('/{professionalUid}/reviews', [ProfessionalReviewController::class, 'writeReview']);
         Route::post('/', [ProfessionalController::class, 'store']);
     }
 );
