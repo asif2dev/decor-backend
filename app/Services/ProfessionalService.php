@@ -5,6 +5,7 @@ namespace App\Services;
 
 
 use App\Models\Professional;
+use App\Models\User;
 use App\Repositories\ProfessionalRepository;
 use Illuminate\Support\Collection;
 
@@ -14,11 +15,14 @@ class ProfessionalService
     {
     }
 
-    public function create(array $data): Professional
+    public function create(User $user, array $data): Professional
     {
         $data['uid'] = (int) (time() . rand(100, 999));
 
-        return $this->professionalRepository->create($data);
+        $professional = $this->professionalRepository->create($data);
+        $professional->users()->attach($user->id);
+
+        return $professional;
     }
 
     public function getTopRated(): Collection

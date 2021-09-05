@@ -16,7 +16,11 @@ class ProfessionalController extends Controller
 
     public function store(CreateProfessionalRequest $request): ProfessionalResource
     {
-        return new ProfessionalResource($this->professionalService->create($request->all()));
+        $user = $request->user();
+
+        return new ProfessionalResource(
+            $this->professionalService->create($user, $request->all())
+        );
     }
 
     public function getTopRated(Request $request): ProfessionalResourceCollection
