@@ -32,4 +32,13 @@ class ProjectRepository extends BaseRepository
 
         return $project;
     }
+
+    public function getLatestProjects(int $count): Collection
+    {
+        $query = (new Project())->newQuery();
+
+        return $query->orderBy('id', 'desc')
+            ->take($count)
+            ->get();
+    }
 }

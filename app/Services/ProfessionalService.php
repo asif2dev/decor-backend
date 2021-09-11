@@ -4,6 +4,7 @@
 namespace App\Services;
 
 
+use App\Http\Forms\SearchForm;
 use App\Models\Professional;
 use App\Models\User;
 use App\Repositories\ProfessionalRepository;
@@ -33,5 +34,10 @@ class ProfessionalService
     public function getByUid(int $uid): ?Professional
     {
         return $this->professionalRepository->getByUid($uid);
+    }
+
+    public function search(SearchForm $searchForm): Collection
+    {
+        return $this->professionalRepository->search($searchForm);
     }
 }

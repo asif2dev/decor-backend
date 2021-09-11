@@ -30,7 +30,14 @@ class ProjectController extends Controller
         return new ProjectResource($project);
     }
 
-    public function getProjects(int $uid)
+    public function getLatestProjects(): ProjectsResourceCollection
+    {
+        $projects = $this->projectService->getLatestProjects();
+
+        return new ProjectsResourceCollection($projects);
+    }
+
+    public function getProjects(int $uid): ProjectsResourceCollection
     {
         $professional = $this->professionalService->getByUid($uid);
 

@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Modules\SearchEngine\DatabaseSearchEngine;
+use App\Modules\SearchEngine\SearchEngineInterface;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +15,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton(
+            SearchEngineInterface::class,
+            fn () => $this->app->make(DatabaseSearchEngine::class)
+        );
     }
 
     /**

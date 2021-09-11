@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\ProfessionalController;
 use App\Http\Controllers\ProfessionalReviewController;
 use App\Http\Controllers\ProjectController;
@@ -19,6 +20,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('categories', [CategoriesController::class, 'getAll']);
+
 Route::group(
     ['prefix' => 'auth'],
     static function () {
@@ -35,7 +38,10 @@ Route::group(
     }
 );
 
+Route::get('/category', [ProfessionalController::class, 'search']);
+
 Route::get('/professionals/top-rated', [ProfessionalController::class, 'getTopRated']);
+Route::get('/projects/latest', [ProjectController::class, 'getLatestProjects']);
 Route::get('/professionals/{professionalUid}/projects', [ProjectController::class, 'getProjects']);
 Route::get('professionals/{professionalUid}/reviews', [ProfessionalReviewController::class, 'getReviews']);
 Route::group(

@@ -31,4 +31,9 @@ class ProjectService
 
         return $project;
     }
+
+    public function getLatestProjects(): Collection
+    {
+        return $this->projectRepository->getLatestProjects(8);
+    }
 }
