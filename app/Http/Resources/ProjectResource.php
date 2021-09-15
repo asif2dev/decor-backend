@@ -8,6 +8,11 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class ProjectResource extends JsonResource
 {
+    public function __construct($resource, private bool $loadProfessional = true)
+    {
+        parent::__construct($resource);
+    }
+
     /**
      * Transform the resource into an array.
      *
@@ -15,14 +20,19 @@ class ProjectResource extends JsonResource
      */
     public function toArray($request): array
     {
-        return [
+        $result =  [
             'id' => $this->resource->id,
             'title' => $this->resource->title,
             'description' => $this->resource->description,
             'images' => new ProjectImagesResourceCollection($this->resource->images),
-            'professional' => new ProfessionalResource($this->resource->professional),
             'tags' => $this->getTags()
         ];
+
+        if ($this->loadProfessional) {
+            $result['professional'] = new ProfessionalResource($this->resource->professional);
+        }
+
+        return $result;
     }
 
     private function getTags(): array

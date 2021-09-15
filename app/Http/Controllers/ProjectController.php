@@ -16,6 +16,16 @@ class ProjectController extends Controller
     ) {
     }
 
+    public function get(int $uid): ProjectResource
+    {
+        $project = $this->projectService->getById($uid);
+        if (!$project) {
+            abort(404);
+        }
+
+        return new ProjectResource($project);
+    }
+
     public function store(Request $request, int $uid): ProjectResource
     {
         $professional = $this->professionalService->getByUid($uid);

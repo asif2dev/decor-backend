@@ -7,13 +7,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Collection;
 use JetBrains\PhpStorm\Pure;
 
-class ProfessionalResource extends JsonResource
+class ProfessionalProfileResource extends JsonResource
 {
-    public function __construct($resource, private bool $loadProjects = false)
-    {
-        parent::__construct($resource);
-    }
-
     /**
      * Transform the resource into an array.
      *
@@ -21,7 +16,7 @@ class ProfessionalResource extends JsonResource
      */
     public function toArray($request): array
     {
-        $result = [
+        return [
             'uid' => $this->resource->uid,
             'companyName' => $this->resource->company_name,
             'about' => $this->resource->about,
@@ -33,20 +28,16 @@ class ProfessionalResource extends JsonResource
             'projectsCount' =>  $this->resource->projects()->count(),
             'reviewsCount' => $this->resource->reviews()->count(),
             'rating' => (float) ($this->resource->reviews()->avg('rating') ?? 0),
+            'reviews' => new ProfessionalReviewResourceCollection($this->resource->reviews),
+            'projects' => $this->getProjects()
         ];
-
-        if ($this->loadProjects) {
-            $result['projects'] = $this->getProjects();
-        }
-
-        return $result;
     }
 
     private function getProjects(): Collection
     {
         $projects = collect();
         foreach ($this->resource->projects as $project) {
-            $projects->push(new ProjectResource($projects, false));
+            $projects->push(new ProjectResource($project, false));
         }
 
         return $projects;

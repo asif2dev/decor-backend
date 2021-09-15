@@ -35,15 +35,20 @@ Route::group(
     ['prefix' => 'user', 'middleware' => 'auth:sanctum'],
     static function () {
         Route::get('/me', [UserController::class, 'getLoggedInUser']);
+        Route::get('/logout', [UserController::class, 'logout']);
     }
 );
 
 Route::get('/category', [ProfessionalController::class, 'search']);
 
 Route::get('/professionals/top-rated', [ProfessionalController::class, 'getTopRated']);
-Route::get('/projects/latest', [ProjectController::class, 'getLatestProjects']);
 Route::get('/professionals/{professionalUid}/projects', [ProjectController::class, 'getProjects']);
 Route::get('professionals/{professionalUid}/reviews', [ProfessionalReviewController::class, 'getReviews']);
+Route::get('professionals/{professionalUid}', [ProfessionalController::class, 'get']);
+
+Route::get('/projects/latest', [ProjectController::class, 'getLatestProjects']);
+Route::get('/projects/{uid}', [ProjectController::class, 'get']);
+
 Route::group(
     ['prefix' => 'professionals', 'middleware' => 'auth:sanctum'],
     static function () {

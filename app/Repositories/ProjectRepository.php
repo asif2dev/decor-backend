@@ -41,4 +41,9 @@ class ProjectRepository extends BaseRepository
             ->take($count)
             ->get();
     }
+
+    public function getById(int $id): ?Project
+    {
+        return Project::find($id);
+    }
 }

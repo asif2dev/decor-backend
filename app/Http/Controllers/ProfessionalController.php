@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Forms\SearchForm;
 use App\Http\Requests\CreateProfessionalRequest;
+use App\Http\Resources\ProfessionalProfileResource;
 use App\Http\Resources\ProfessionalResource;
 use App\Http\Resources\ProfessionalResourceCollection;
 use App\Modules\SearchEngine\SearchEngineInterface;
@@ -16,6 +17,16 @@ class ProfessionalController extends Controller
         private ProfessionalService $professionalService,
         private SearchEngineInterface $searchEngine
     ) {
+    }
+
+    public function get(string $professionalUid): ProfessionalProfileResource
+    {
+        $professional = $this->professionalService->getByUid($professionalUid);
+        if ($professional === null) {
+            abort(404);
+        }
+
+        return new ProfessionalProfileResource($professional);
     }
 
     public function store(CreateProfessionalRequest $request): ProfessionalResource

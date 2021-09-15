@@ -36,4 +36,9 @@ class ProjectService
     {
         return $this->projectRepository->getLatestProjects(8);
     }
+
+    public function getById(int $id): ?Project
+    {
+        return $this->projectRepository->getById($id);
+    }
 }
