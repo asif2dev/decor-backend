@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use App\Support\PhoneNumber;
+use App\Support\VerificationCode;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -18,19 +21,39 @@ class LoginController extends Controller
 
     public function login(Request $request): JsonResponse
     {
-        $user = $this->authService->login($request->only(['email', 'password']));
-        if ($user === null) {
-            return response()->json([], Response::HTTP_BAD_REQUEST);
+        if ($request->has('phone') === false) {
+            abort(400);
         }
 
-        $authToken = $this->authService->createAuthToken($user);
+        $phone = $request->get('phone');
+        if (PhoneNumber::isValid($phone) === false) {
+            abort(422);
+        }
 
-        return response()->json(['authToken' => $authToken]);
+        $user = $this->authService->getUserByPhone($phone);
+        if ($user === null) {
+            $user = $this->authService->register($phone);
+        }
+
+        $code = VerificationCode::generate();
+
+        $this->authService->sendSms($user, $code);
+
+        return response()->json([]);
     }
 
-    public function loginFB(Request $request): JsonResponse
+    public function verify(Request $request): JsonResponse
     {
-        $authToken = $this->authService->loginFb($request->all());
+        if ($request->has('code') === false || $request->has('phone') === false) {
+            abort(400);
+        }
+
+        $phone = $request->get('phone');
+        $code = $request->get('code');
+
+        $user = $this->authService->login($phone, $code);
+
+        $authToken = $this->authService->createAuthToken($user);
 
         return response()->json(['authToken' => $authToken]);
     }

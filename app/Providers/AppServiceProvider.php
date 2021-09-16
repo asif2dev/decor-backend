@@ -4,6 +4,9 @@ namespace App\Providers;
 
 use App\Modules\SearchEngine\DatabaseSearchEngine;
 use App\Modules\SearchEngine\SearchEngineInterface;
+use App\Modules\SMS\ClickSend\ClickSend;
+use App\Modules\SMS\NullSms;
+use App\Modules\SMS\SMSInterface;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -18,6 +21,12 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(
             SearchEngineInterface::class,
             fn () => $this->app->make(DatabaseSearchEngine::class)
+        );
+
+
+        $this->app->singleton(
+            SMSInterface::class,
+            fn () => $this->app->make(NullSms::class)
         );
     }
 

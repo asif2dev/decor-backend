@@ -5,23 +5,45 @@ namespace App\Http\Controllers\Auth;
 
 
 use App\Models\User;
+use App\Modules\SMS\SMSInterface;
 use App\Repositories\UserRepository;
 use Illuminate\Contracts\Hashing\Hasher;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
+use InvalidArgumentException;
 
 class AuthService
 {
     /** @var string */
     private const AUTH_TOKEN_NAME = 'auth-token';
 
-    public function __construct(private UserRepository $userRepository, private Hasher $hasher)
-    {
+    public function __construct(
+        private UserRepository $userRepository,
+        private SMSInterface $sms
+    ) {
     }
 
-    public function register(array $userData): User
+    public function login(string $phone, string $code): User
     {
-        return $this->userRepository->createUser($userData);
+        $user = $this->userRepository->getUserByPhone($phone);
+        if (!$user) {
+            throw new ModelNotFoundException('User doesnt exist');
+        }
+
+        if ($user->verification_code !== $code) {
+            throw new InvalidArgumentException('Invalid input provided');
+        }
+
+        Auth::login($user);
+
+        return $user;
+    }
+
+    public function register(string $phone): User
+    {
+        return $this->userRepository->createUser(['phone' => $phone]);
     }
 
     public function createAuthToken(User $user): string
@@ -29,20 +51,12 @@ class AuthService
         return $user->createToken(self::AUTH_TOKEN_NAME)->plainTextToken;
     }
 
-    public function login(array $credentials): ?User
+    public function sendSms(User $user, string $code): bool
     {
-        $user = $this->userRepository->getUserByEmail($credentials['email']);
-        if ($user === null) {
-            return null;
-        }
+        $user->verification_code = $code;
+        $user->save();
 
-        if ($this->hasher->check($credentials['password'], $user->getAuthPassword()) === false) {
-            return null;
-        }
-
-        Auth::login($user);
-
-        return $user;
+        return $this->sms->sendLoginMessage($user->phone, $code);
     }
 
     public function logout(User $user): bool
@@ -55,15 +69,8 @@ class AuthService
         return $this->userRepository->getUserByEmail($request->user()->email);
     }
 
-    public function loginFb(array $userData): string
+    public function getUserByPhone(string $phone): ?User
     {
-        $user = $this->userRepository->getUserByEmail($userData['email']);
-        if (!$user) {
-            $user = $this->userRepository->createUser($userData);
-        }
-
-        Auth::login($user);
-
-        return $this->createAuthToken($user);
+        return $this->userRepository->getUserByPhone($phone);
     }
 }

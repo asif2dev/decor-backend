@@ -18,6 +18,11 @@ class UserRepository extends BaseRepository
         return User::where('email', $email)->first();
     }
 
+    public function getUserByPhone(string $phone): ?User
+    {
+        return User::where('phone', $phone)->first();
+    }
+
     public function updateUser(User $user, array $data): bool
     {
         $data = $this->convertToSnakeCase($data);

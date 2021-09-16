@@ -26,14 +26,14 @@ Route::group(
     ['prefix' => 'auth'],
     static function () {
         Route::post('login', [LoginController::class, 'login']);
-        Route::post('register', [RegisterController::class, 'register']);
-        Route::post('loginFB', [LoginController::class, 'loginFB']);
+        Route::post('verify', [LoginController::class, 'verify']);
     }
 );
 
 Route::group(
     ['prefix' => 'user', 'middleware' => 'auth:sanctum'],
     static function () {
+        Route::post('/', [UserController::class, 'updateUser']);
         Route::get('/me', [UserController::class, 'getLoggedInUser']);
         Route::get('/logout', [UserController::class, 'logout']);
     }
