@@ -14,6 +14,7 @@ class CreateUserProfessionalsTable extends Migration
     public function up()
     {
         Schema::create('professional_users', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('professional_id');
 

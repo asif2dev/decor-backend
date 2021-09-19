@@ -45,4 +45,13 @@ class ProfessionalRepository extends BaseRepository
 
         return $query->get();
     }
+
+    public function update(Professional $professional, array $data): Professional
+    {
+        $data = $this->convertToSnakeCase($data);
+
+        $professional->update($data);
+
+        return $professional;
+    }
 }

@@ -3,44 +3,30 @@
 
 namespace App\Services;
 
+use App\Services\Images\ImageHandlerInterface;
+use App\Services\Images\ProfessionalImage;
 use App\Services\Images\ProjectImage;
 use App\Services\Images\UserImage;
-use Illuminate\Http\UploadedFile;
+use Illuminate\Contracts\Foundation\Application;
 
 class ImageHandler
 {
-    private UserImage $userImage;
-    private ProjectImage $itemImage;
-
-    public function __construct(UserImage $userImage, ProjectImage $itemImage)
+    public function __construct(private Application $application)
     {
-        $this->userImage = $userImage;
-        $this->itemImage = $itemImage;
     }
 
-    public function uploadUserImage(UploadedFile $image): string
+    public function professional(): ImageHandlerInterface
     {
-        return $this->userImage->uploadImage($image);
+        return $this->application->make(ProfessionalImage::class);
     }
 
-    public function uploadProjectImage(UploadedFile $image): string
+    public function project(): ImageHandlerInterface
     {
-        return $this->itemImage->uploadImage($image);
+        return $this->application->make(ProjectImage::class);
     }
 
-    public function removeProjectImages(array $images): void
+    public function user(): ImageHandlerInterface
     {
-        foreach ($images as $image) {
-            $this->itemImage->removeImage($image);
-        }
-    }
-
-    public function removeUserImage(?string $image = null): void
-    {
-        if ($image === null) {
-            return;
-        }
-
-        $this->userImage->removeImage($image);
+        return $this->application->make(UserImage::class);
     }
 }

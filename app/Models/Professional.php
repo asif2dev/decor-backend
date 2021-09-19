@@ -16,8 +16,11 @@ class Professional extends Model
         'uid',
         'company_name',
         'about',
+        'logo',
+        'offer_execution',
         'category_id',
         'phone1',
+        'phone2',
         'lat_lng',
         'full_address'
     ];

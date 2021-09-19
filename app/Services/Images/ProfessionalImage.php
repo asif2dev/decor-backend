@@ -8,13 +8,13 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 
-class UserImage implements ImageHandlerInterface
+class ProfessionalImage implements ImageHandlerInterface
 {
-    const PATH = 'users';
+    const PATH = 'professionals';
 
-    public function uploadImage(UploadedFile $file): string
+    public function uploadImage(UploadedFile $image): string
     {
-        $path = Storage::putFile(self::PATH, $file);
+        $path = Storage::putFile(self::PATH, $image);
 
         return Storage::url($path);
     }

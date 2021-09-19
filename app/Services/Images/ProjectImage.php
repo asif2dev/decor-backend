@@ -8,13 +8,13 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 
-class ProjectImage
+class ProjectImage implements ImageHandlerInterface
 {
     const PATH = 'projects';
 
-    public function uploadImage(UploadedFile $image): string
+    public function uploadImage(UploadedFile $file): string
     {
-        $path = Storage::putFile( self::PATH, $image);
+        $path = Storage::putFile( self::PATH, $file);
 
         logger()->info('ProjectImage: ', [
             'path' => $path
@@ -30,6 +30,6 @@ class ProjectImage
 
     public static function generatePath(string $url): string
     {
-        return  self::PATH . '/' . Arr::last(explode(self::PATH . '/', $url));
+        return self::PATH . '/' . Arr::last(explode(self::PATH . '/', $url));
     }
 }

@@ -10,6 +10,7 @@ use App\Http\Resources\ProfessionalResourceCollection;
 use App\Modules\SearchEngine\SearchEngineInterface;
 use App\Services\ProfessionalService;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class ProfessionalController extends Controller
 {
@@ -32,13 +33,14 @@ class ProfessionalController extends Controller
     public function store(CreateProfessionalRequest $request): ProfessionalResource
     {
         $user = $request->user();
+        $logo = $request->file('logo');
 
         return new ProfessionalResource(
-            $this->professionalService->create($user, $request->all())
+            $this->professionalService->create($user, $request->all(), $logo)
         );
     }
 
-    public function getTopRated(Request $request): ProfessionalResourceCollection
+    public function getTopRated(): ProfessionalResourceCollection
     {
         return new ProfessionalResourceCollection(
             $this->professionalService->getTopRated()
@@ -52,5 +54,21 @@ class ProfessionalController extends Controller
         return new ProfessionalResourceCollection(
             $this->searchEngine->search($searchForm)
         );
+    }
+
+    public function update(Request $request, int $professionalUid): ProfessionalResource
+    {
+        $professional = $this->professionalService->getByUid($professionalUid);
+        if ($professional === null) {
+            abort(404);
+        }
+
+        if ($this->professionalService->hasUser($professional, $request->user()) === false) {
+            abort(Response::HTTP_FORBIDDEN);
+        }
+
+        $professional = $this->professionalService->update($professional, $request->all(), $request->file('logo'));
+
+        return new ProfessionalResource($professional);
     }
 }

@@ -54,6 +54,7 @@ Route::group(
     static function () {
         Route::post('/{professionalUid}/projects', [ProjectController::class, 'store']);
         Route::post('/{professionalUid}/reviews', [ProfessionalReviewController::class, 'writeReview']);
+        Route::post('/{professionalUid}', [ProfessionalController::class, 'update']);
         Route::post('/', [ProfessionalController::class, 'store']);
     }
 );
