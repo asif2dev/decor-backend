@@ -47,6 +47,7 @@ Route::get('professionals/{professionalUid}/reviews', [ProfessionalReviewControl
 Route::get('professionals/{professionalUid}', [ProfessionalController::class, 'get']);
 
 Route::get('/projects/latest', [ProjectController::class, 'getLatestProjects']);
+Route::get('/projects/tags', [ProjectController::class, 'getTags']);
 Route::get('/projects/{uid}', [ProjectController::class, 'get']);
 
 Route::group(
