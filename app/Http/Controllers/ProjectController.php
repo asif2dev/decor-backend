@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\ProjectResource;
 use App\Http\Resources\ProjectsResourceCollection;
 use App\Http\Resources\ProjectTagsResourceCollection;
+use App\Models\Project;
 use App\Models\ProjectTag;
 use App\Services\ProfessionalService;
 use App\Services\ProjectService;
@@ -26,6 +27,11 @@ class ProjectController extends Controller
         }
 
         return new ProjectResource($project);
+    }
+
+    public function getSimilar(string $uid): ProjectsResourceCollection
+    {
+        return new ProjectsResourceCollection(Project::get());
     }
 
     public function store(Request $request, int $uid): ProjectResource
