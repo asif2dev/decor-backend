@@ -3,7 +3,11 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
+use App\Services\Images\ImageHandlerInterface;
+use App\Support\Str;
 use Illuminate\Database\Seeder;
+use Illuminate\Http\File;
+use Illuminate\Support\Facades\Storage;
 
 class CategoriesSeeder extends Seeder
 {
@@ -16,12 +20,18 @@ class CategoriesSeeder extends Seeder
     {
         $categories = json_decode(file_get_contents(__DIR__. '/categories.json'), true);
         foreach ($categories as $category) {
-            $cat = Category::where('name', $category['name'])->first();
+            $cat = Category::where('id', $category['id'])->first();
             if ($cat) {
                 continue;
             }
 
-            Category::create(['name' => $category['name']]);
+            $image = resource_path("services/$category[id].jpeg");
+            $path = Storage::putFile('categories', new File($image));
+
+            $category['slug'] = Str::arSlug($category['name']);
+            $category['photo'] = Storage::url($path);
+
+            Category::create($category);
         }
     }
 }

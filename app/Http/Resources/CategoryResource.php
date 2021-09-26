@@ -13,12 +13,20 @@ class CategoryResource extends JsonResource
      *
      * @param Request  $request
      */
-    #[ArrayShape(['id' => "int", 'name' => "string"])]
-    public function toArray($request): array
+    #[ArrayShape([
+        'id' => "int",
+        'name' => "string",
+        'slug' => "string",
+        'photo' => "string",
+        'description' => "string"
+    ])] public function toArray($request): array
     {
         return [
             'id' => $this->resource->id,
-            'name' => $this->resource->name
+            'name' => $this->resource->name,
+            'slug' => $this->resource->slug,
+            'photo' => $this->resource->photo,
+            'description' => $this->resource->description,
         ];
     }
 }

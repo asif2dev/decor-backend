@@ -41,7 +41,7 @@ class ProfessionalRepository extends BaseRepository
     public function search(SearchForm $searchForm): Collection
     {
         $query = (new Professional())->newQuery();
-        $query->when($searchForm->getCategory(), fn($q) => $q->where('category_id', $searchForm->getCategory()));
+        $query->when($searchForm->getCategory(), fn($q) => $q->whereRelation('category', 'slug', $searchForm->getCategory()));
 
         return $query->get();
     }

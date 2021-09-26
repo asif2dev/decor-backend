@@ -10,7 +10,7 @@ class Str extends BaseStr
     {
         $string = trim($string);
 
-        $string = preg_replace("/[\s&\/\\\_]+/", $separator, $string);
+        $string = preg_replace("/[\s&\/\\\_)(]+/", $separator, $string);
 
         return rawurldecode($string);
     }

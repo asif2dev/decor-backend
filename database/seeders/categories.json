@@ -1,62 +1,146 @@
 [
     {
-        "name": "Interior & Exterior Design",
-        "services": [
-            { "name": "Interior Design" },
-            { "name": "Exterior Design" },
-            { "name": "Landscape Design" },
-            { "name": "Mock Ups" },
-            { "name": "Hospitality" },
-            { "name": "Offices" },
-            { "name": "Sales Center" },
-            { "name": "Restaurants And Cafes" },
-            { "name": "Retail" },
-            { "name": "Medical" },
-            { "name": "Yachts" },
-            { "name": "Booths" },
-            { "name": "Finishing Matrix" }
-        ]
+        "id": 1,
+        "name": "تصميم داخلي وخارجي",
+        "photo": "",
+        "slug": "",
+        "description": ""
     },
-    { "name": "Kitchen & Bathroom Remodelers" },
-    { "name": "Carpenters" },
-    { "name": "Electricians" },
-    { "name": "Appliances" },
     {
-        "name": "Air Conditioning & Heating",
-        "services": [
-            { "name": "Centeral Air Conditioning" },
-            { "name": "Air Conditioning" }
-        ]
+        "id":  2,
+        "name": "مطابخ",
+        "photo": "",
+        "slug":  "",
+        "description":  ""
     },
-    { "name": "Plumbers" },
-    { "name": "Door Dealers" },
     {
-        "name": "Flooring Contractors",
-        "services": [
-            { "name": "Ceramic" },
-            { "name": "Borcaleen" },
-            { "name": "Barquee" },
-            { "name": "Stone" }
-        ]
+        "id":  3,
+        "name": "اعمال نجارة",
+        "photo": "",
+        "slug":  "",
+        "description":  ""
     },
-    { "name": "Window Contractors" },
-    { "name": "Furniture Repair & Upholstery" },
-    { "name": "Glass & Shower Door Dealers" },
-    { "name": "Ironwork" },
-    { "name": "Lighting" },
-    { "name": "Handyman" },
     {
-        "name": "Painters & Wall Coverings",
-        "services": [
-            { "name": "Painters" },
-            { "name": "Wall Covering" },
-            { "name": "Panels" },
-            { "name": "Foteek" }
-        ]
+        "id":  4,
+        "name": "اعمال كهرباء",
+        "photo": "",
+        "slug":  "",
+        "description":  ""
     },
-    { "name": "Movers" },
-    { "name": "Roofing & Gutters" },
-    { "name": "Gardeners & Lawn Care" },
-    { "name": "Spa & Pool Maintenance" },
-    { "name": "Tile, Stone & Countertops" }
+    {
+        "id":  5,
+        "name": "أجهزة منزلية وإلكترونية",
+        "photo": "",
+        "slug":  "",
+        "description":  ""
+    },
+    {
+        "id":  6,
+        "name": "تكييفات (تبريد وتسخين)",
+        "photo": "",
+        "slug":  "",
+        "description":  ""
+    },
+    {
+        "id":  7,
+        "name": "سباك",
+        "photo": "",
+        "slug":  "",
+        "description":  ""
+    },
+    {
+        "id":  8,
+        "name": "أبواب",
+        "photo": "",
+        "slug":  "",
+        "description":  ""
+    },
+    {
+        "id":  9,
+        "name": "أرضيات",
+        "photo": "",
+        "slug":  "",
+        "description":  ""
+    },
+    {
+        "id":  10,
+        "name": "نوافذ",
+        "photo": "",
+        "slug":  "",
+        "description":  ""
+    },
+    {
+        "id":  11,
+        "name": "إصلاح أثاث",
+        "photo": "",
+        "slug":  "",
+        "description":  ""
+    },
+    {
+        "id":  12,
+        "name": "زجاج و كابينات حمام",
+        "photo": "",
+        "slug":  "",
+        "description":  ""
+    },
+    {
+        "id":  13,
+        "name": "أعمال حدادة",
+        "photo": "",
+        "slug":  "",
+        "description":  ""
+    },
+    {
+        "id":  14,
+        "name": "أضائات",
+        "photo": "",
+        "slug":  "",
+        "description":  ""
+    },
+    {
+        "id":  15,
+        "name": "أعمال يدوية",
+        "photo": "",
+        "slug":  "",
+        "description":  ""
+    },
+    {
+        "id":  16,
+        "name": "نقاش ودهانات",
+        "photo": "",
+        "slug":  "",
+        "description":  ""
+    },
+    {
+        "id":  17,
+        "name": "خدمات النقل",
+        "photo": "",
+        "slug":  "",
+        "description":  ""
+    },
+    {
+        "id":  18,
+        "name": "أسطح",
+        "photo": "",
+        "slug":  "",
+        "description":  ""
+    },
+    {
+        "id":  19,
+        "name": "حدائق وعناية بالعشب",
+        "photo": "",
+        "slug":  "",
+        "description":  ""
+    },
+    {
+        "id":  20,
+        "name": "أعمال وصيانة حمامات سباحة",
+        "photo": "",
+        "slug":  "",
+        "description":  ""
+    },
+    {
+        "id":  21,
+        "name": "البلاط والحجر والكونترتوب"
+    }
 ]
