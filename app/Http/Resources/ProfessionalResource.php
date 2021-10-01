@@ -28,8 +28,8 @@ class ProfessionalResource extends JsonResource
             'logo' => $this->resource->logo,
             'category' => new CategoryResource($this->resource->category),
             'offerExecution' => $this->resource->offer_execution,
-            'phone1' =>  $this->resource->phone1,
-            'phone2' =>  $this->resource->phone2,
+            'phone1' =>  $this->parsePhone($this->resource->phone1),
+            'phone2' =>  $this->parsePhone($this->resource->phone2),
             'latLng' =>  $this->resource->lat_lng,
             'fullAddress' =>  $this->resource->full_address,
             'projectsCount' =>  $this->resource->projects()->count(),
@@ -52,5 +52,14 @@ class ProfessionalResource extends JsonResource
         }
 
         return $projects;
+    }
+
+    private function parsePhone(string|null $phone): string|null
+    {
+        if ($phone === 'null' || $phone === null) {
+            return null;
+        }
+
+        return $phone;
     }
 }
