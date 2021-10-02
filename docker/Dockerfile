@@ -51,6 +51,8 @@ RUN mkdir -p /run/nginx
 WORKDIR /app
 COPY . /app
 
+RUN ls -la
+
 COPY docker/nginx.conf /etc/nginx/nginx.conf
 
 RUN chown -R www-data:www-data /app
