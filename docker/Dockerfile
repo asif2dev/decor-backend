@@ -49,7 +49,7 @@ RUN sh -c "wget http://getcomposer.org/composer.phar && chmod a+x composer.phar 
 RUN mkdir -p /run/nginx
 
 WORKDIR /app
-COPY . /app
+COPY . .
 
 RUN ls -la
 
