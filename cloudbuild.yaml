@@ -1,18 +1,34 @@
 steps:
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'bash'
+    args: [
+        '-c',
+        './generate-env.sh && echo $$GCS_KEY_FILE >> config/gcs_key.json'
+    ]
+    env:
+      - 'ENVIRONMENT=gae'
+    secretEnv:
+      - DB_PASSWORD
+      - DB_USERNAME
+      - MAILJET_API_KEY
+      - MAILJET_API_SECRET
+      - GCS_KEY_FILE
+      - ALGOLIA_APP_ID
+      - ALGOLIA_SECRET
   - name: gcr.io/cloud-builders/docker
     args:
       - build
       - '--no-cache'
       - '-t'
-      - '$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA'
-      - docker
+      - '$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:latest'
+      - ./
       - '-f'
       - docker/Dockerfile
     id: Build
   - name: gcr.io/cloud-builders/docker
     args:
       - push
-      - '$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA'
+      - '$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:latest'
     id: Push
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:slim'
     args:
@@ -21,15 +37,15 @@ steps:
       - update
       - $_SERVICE_NAME
       - '--platform=managed'
-      - '--image=$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA'
+      - '--image=$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:latest'
       - >-
-        --labels=managed-by=gcp-cloud-build-deploy-cloud-run,commit-sha=$COMMIT_SHA,gcb-build-id=$BUILD_ID,gcb-trigger-id=$_TRIGGER_ID,$_LABELS
+        --labels=managed-by=gcp-cloud-build-deploy-cloud-run,commit-sha=latest,gcb-build-id=$BUILD_ID,gcb-trigger-id=$_TRIGGER_ID,$_LABELS
       - '--region=$_DEPLOY_REGION'
       - '--quiet'
     id: Deploy
     entrypoint: gcloud
 images:
-  - '$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA'
+  - '$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:latest'
 options:
   substitutionOption: ALLOW_LOOSE
 substitutions:
@@ -42,4 +58,21 @@ substitutions:
 tags:
   - gcp-cloud-build-deploy-cloud-run
   - gcp-cloud-build-deploy-cloud-run-managed
-  - decor-backend
+  - egarmarket-backend
+timeout: '1600s'
+availableSecrets:
+  secretManager:
+    - versionName: projects/403554860093/secrets/DB_PASSWORD/versions/latest
+      env: DB_PASSWORD
+    - versionName: projects/403554860093/secrets/DB_USERNAME/versions/latest
+      env: DB_USERNAME
+    - versionName: projects/403554860093/secrets/MAILJET_API_KEY/versions/latest
+      env: MAILJET_API_KEY
+    - versionName: projects/403554860093/secrets/MAILJET_API_SECRET/versions/latest
+      env: MAILJET_API_SECRET
+    - versionName: projects/403554860093/secrets/GCS_KEY_FILE/versions/latest
+      env: GCS_KEY_FILE
+    - versionName: projects/403554860093/secrets/ALGOLIA_APP_ID/versions/latest
+      env: ALGOLIA_APP_ID
+    - versionName: projects/403554860093/secrets/ALGOLIA_SECRET/versions/latest
+      env: ALGOLIA_SECRET
