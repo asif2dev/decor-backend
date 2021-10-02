@@ -49,9 +49,7 @@ RUN sh -c "wget http://getcomposer.org/composer.phar && chmod a+x composer.phar 
 RUN mkdir -p /run/nginx
 
 WORKDIR /app
-COPY ../ /app
-
-RUN ls -la
+COPY . /app
 
 COPY docker/nginx.conf /etc/nginx/nginx.conf
 
