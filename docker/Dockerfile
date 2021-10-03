@@ -53,7 +53,7 @@ COPY . /app
 
 RUN ls -la
 
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY docker/nginx.conf /etc/nginx/nginx.conf
 
 RUN chown -R www-data:www-data /app
 RUN chmod -R 755 /app/storage
@@ -68,6 +68,6 @@ RUN php artisan config:cache
 
 EXPOSE 80
 
-RUN ["chmod", "+x", "post_deploy.sh"]
+RUN ["chmod", "+x", "docker/post_deploy.sh"]
 
-CMD [ "sh", "./post_deploy.sh" ]
+CMD [ "sh", "./docker/post_deploy.sh" ]
