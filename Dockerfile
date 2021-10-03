@@ -53,7 +53,7 @@ COPY . /app
 
 RUN ls -la
 
-COPY docker/nginx.conf /etc/nginx/nginx.conf
+COPY nginx.conf /etc/nginx/nginx.conf
 
 RUN chown -R www-data:www-data /app
 RUN chmod -R 755 /app/storage
