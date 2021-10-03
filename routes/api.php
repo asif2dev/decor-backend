@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\EnvController;
 use App\Http\Controllers\ProfessionalController;
 use App\Http\Controllers\ProfessionalReviewController;
 use App\Http\Controllers\ProjectController;
@@ -19,6 +20,8 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::get('env', [EnvController::class, 'get']);
 
 Route::get('categories', [CategoriesController::class, 'getAll']);
 
