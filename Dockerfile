@@ -68,6 +68,6 @@ RUN php artisan config:cache
 
 EXPOSE 80
 
-RUN ["chmod", "+x", "docker/post_deploy.sh"]
+RUN ["chmod", "+x", "post_deploy.sh"]
 
-CMD [ "sh", "./docker/post_deploy.sh" ]
+CMD [ "sh", "./post_deploy.sh" ]
