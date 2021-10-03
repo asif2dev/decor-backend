@@ -47,7 +47,8 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
-        ]
+        ],
+        "gcp-build": "sed -i -e \"s|env('APP_STORAGE', base_path() . '/storage')|'/tmp'|g\" bootstrap/app.php && mkdir -p /tmp/framework/views && mv .env.gae .env && php artisan config:cache && rm -f .env && php artisan route:cache"
     },
     "extra": {
         "laravel": {
