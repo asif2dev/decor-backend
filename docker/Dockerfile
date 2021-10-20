@@ -2,7 +2,6 @@ FROM php:8.0-fpm
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
-    git \
     curl \
     libfreetype6-dev \
     libjpeg62-turbo-dev \
@@ -27,11 +26,11 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg
 RUN docker-php-ext-configure opcache --enable-opcache
 RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd opcache
 
-RUN echo "error_reporting=E_ALL" > /usr/local/etc/php/conf.d/php.ini && \
-    echo "display_errors=1" >> /usr/local/etc/php/conf.d/php.ini  && \
-    echo "log_errors=1" >> /usr/local/etc/php/conf.d/php.ini  && \
-    echo "post_max_size=64M" >> /usr/local/etc/php/conf.d/php.ini && \
-    echo "upload_max_filesize=64M" >> /usr/local/etc/php/conf.d/php.ini
+#RUN echo "error_reporting=E_ALL" > /usr/local/etc/php/conf.d/php.ini && \
+#    echo "display_errors=1" >> /usr/local/etc/php/conf.d/php.ini  && \
+#    echo "log_errors=1" >> /usr/local/etc/php/conf.d/php.ini  && \
+#    echo "post_max_size=64M" >> /usr/local/etc/php/conf.d/php.ini && \
+#    echo "upload_max_filesize=64M" >> /usr/local/etc/php/conf.d/php.ini
 
 RUN { \
         echo 'opcache.enable=1'; \
@@ -50,8 +49,6 @@ RUN mkdir -p /run/nginx
 
 WORKDIR /app
 COPY . /app
-
-RUN ls -la
 
 COPY docker/nginx.conf /etc/nginx/nginx.conf
 
