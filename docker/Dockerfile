@@ -1,9 +1,6 @@
 FROM php:8.0-apache
 
 COPY docker/apache2.conf /etc/apache2/sites-available/app.conf
-RUN sed -i 's/80/$PORT/g' /etc/apache2/sites-available/app.conf /etc/apache2/ports.conf
-RUN a2enmod rewrite
-RUN service apache2 restart
 
 EXPOSE 80
 
@@ -63,3 +60,7 @@ RUN php artisan route:clear
 RUN php artisan route:cache
 RUN php artisan config:clear
 RUN php artisan config:cache
+
+RUN ["chmod", "+x", "docker/post_deploy.sh"]
+
+CMD [ "sh", "./docker/post_deploy.sh" ]
