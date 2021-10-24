@@ -1,6 +1,6 @@
 FROM php:8.0-apache
 
-COPY docker/apache2.conf /etc/apache2/sites-available/app.conf
+COPY docker/apache2.conf /etc/apache2/sites-available/000-default.conf
 
 EXPOSE 80
 
@@ -61,9 +61,6 @@ RUN php artisan route:cache
 RUN php artisan config:clear
 RUN php artisan config:cache
 
-RUN sed -i "s/80/${PORT}/g" /etc/apache2/sites-available/app.conf /etc/apache2/ports.conf
+RUN ["chmod", "+x", "docker/post_deploy.sh"]
 
-RUN cat /etc/apache2/sites-available/app.conf
-RUN cat /etc/apache2/ports.conf
-RUN a2enmod rewrite
-RUN service apache2 restart
+CMD [ "sh", "./docker/post_deploy.sh" ]
