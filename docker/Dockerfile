@@ -60,7 +60,7 @@ WORKDIR /app
 COPY . /app
 
 RUN chown -R www-data:www-data /app
-RUN chmod -R 755 /app/storage
+RUN chmod -R 755 /app
 
 RUN composer install --working-dir="/app"
 RUN composer dump-autoload --working-dir="/app"
