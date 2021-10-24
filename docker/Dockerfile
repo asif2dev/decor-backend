@@ -1,4 +1,11 @@
-FROM php:8.0-fpm
+FROM php:8.0-apache
+
+COPY docker/apache2.conf /etc/apache2/sites-available/app.conf
+RUN sed -i 's/80/${PORT}/g' /etc/apache2/sites-available/app.conf /etc/apache2/ports.conf
+RUN a2enmod rewrite
+RUN service apache2 restart
+
+EXPOSE 80
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -14,9 +21,7 @@ RUN apt-get update && apt-get install -y \
     unzip \
     build-essential \
     openssl \
-    nginx \
-    wget \
-    netcat
+    wget
 
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
@@ -45,12 +50,8 @@ RUN { \
 
 RUN sh -c "wget http://getcomposer.org/composer.phar && chmod a+x composer.phar && mv composer.phar /usr/local/bin/composer"
 
-RUN mkdir -p /run/nginx
-
 WORKDIR /app
 COPY . /app
-
-COPY docker/nginx.conf /etc/nginx/nginx.conf
 
 RUN chown -R www-data:www-data /app
 RUN chmod -R 755 /app/storage
@@ -62,9 +63,3 @@ RUN php artisan route:clear
 RUN php artisan route:cache
 RUN php artisan config:clear
 RUN php artisan config:cache
-
-EXPOSE 80
-
-RUN ["chmod", "+x", "docker/post_deploy.sh"]
-
-CMD [ "sh", "./docker/post_deploy.sh" ]
