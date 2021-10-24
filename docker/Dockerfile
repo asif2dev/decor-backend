@@ -8,9 +8,6 @@ RUN cat /etc/apache2/ports.conf
 RUN a2enmod rewrite
 RUN service apache2 restart
 
-RUN php -r 'phpinfo();'
-
-
 EXPOSE 80
 
 # Install system dependencies
