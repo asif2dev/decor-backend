@@ -8,6 +8,8 @@ RUN cat /etc/apache2/ports.conf
 RUN a2enmod rewrite
 RUN service apache2 restart
 
+RUN echo  httpd -M | grep 'rewrite'
+
 
 EXPOSE 80
 
