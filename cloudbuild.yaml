@@ -42,6 +42,7 @@ steps:
         --labels=managed-by=gcp-cloud-build-deploy-cloud-run,commit-sha=latest,gcb-build-id=$BUILD_ID,gcb-trigger-id=$_TRIGGER_ID,$_LABELS
       - '--region=$_DEPLOY_REGION'
       - '--quiet'
+      - '--port=80'
     id: Deploy
     entrypoint: gcloud
 images:
