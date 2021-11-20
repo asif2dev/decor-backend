@@ -9,6 +9,7 @@ use App\Models\Project;
 use App\Models\User;
 use App\Repositories\ProfessionalRepository;
 use App\Repositories\ProjectRepository;
+use App\Repositories\TagsRepository;
 use App\Services\Images\ImageHandlerInterface;
 use Illuminate\Support\Collection;
 
@@ -16,15 +17,22 @@ class ProjectService
 {
     private ImageHandlerInterface $projectImage;
 
-    public function __construct(private ProjectRepository $projectRepository, private ImageHandler $imageHandler)
-    {
+    public function __construct(
+        private ProjectRepository $projectRepository,
+        private ImageHandler $imageHandler,
+        private TagsRepository $tagsRepository
+    ) {
         $this->projectImage = $this->imageHandler->project();
     }
 
     public function create(Professional $professional, array $data, array $images = []): Project
     {
+        $tags = $this->tagsRepository->syncTags($data['tags']);
+
         /** @var Project $project */
         $project = $professional->projects()->create($data);
+
+        $project->tags()->sync($tags->pluck('id')->flatten()->toArray());
 
         $paths = [];
         foreach ($images as $image) {

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\ProjectTag;
+use App\Models\Tag;
 use Illuminate\Database\Seeder;
 
 class ProjectTagsSeeder extends Seeder
@@ -16,12 +17,12 @@ class ProjectTagsSeeder extends Seeder
     {
         $projectTags = json_decode(file_get_contents(__DIR__. '/project-tags.json'), true);
         foreach ($projectTags as $tag) {
-            $cat = ProjectTag::where('name', $tag['name'])->first();
+            $cat = Tag::where('name', $tag['name'])->first();
             if ($cat) {
                 continue;
             }
 
-            ProjectTag::create(['name' => $tag['name']]);
+            Tag::create(['name' => $tag['name']]);
         }
     }
 }

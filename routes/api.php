@@ -7,6 +7,7 @@ use App\Http\Controllers\EnvController;
 use App\Http\Controllers\ProfessionalController;
 use App\Http\Controllers\ProfessionalReviewController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -50,7 +51,7 @@ Route::get('professionals/{professionalUid}/reviews', [ProfessionalReviewControl
 Route::get('professionals/{professionalUid}', [ProfessionalController::class, 'get']);
 
 Route::get('/projects/latest', [ProjectController::class, 'getLatestProjects']);
-Route::get('/projects/tags', [ProjectController::class, 'getTags']);
+Route::get('/tags', [TagController::class, 'getTags']);
 Route::get('/projects/{uid}/similar', [ProjectController::class, 'getSimilar']);
 Route::get('/projects/{uid}', [ProjectController::class, 'get']);
 

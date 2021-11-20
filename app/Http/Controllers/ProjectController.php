@@ -7,6 +7,7 @@ use App\Http\Resources\ProjectsResourceCollection;
 use App\Http\Resources\ProjectTagsResourceCollection;
 use App\Models\Project;
 use App\Models\ProjectTag;
+use App\Models\Tag;
 use App\Services\ProfessionalService;
 use App\Services\ProjectService;
 use Illuminate\Http\Request;
@@ -60,10 +61,5 @@ class ProjectController extends Controller
         $professional = $this->professionalService->getByUid($uid);
 
         return new ProjectsResourceCollection($professional->projects);
-    }
-
-    public function getTags(): ProjectTagsResourceCollection
-    {
-        return new ProjectTagsResourceCollection(ProjectTag::get());
     }
 }

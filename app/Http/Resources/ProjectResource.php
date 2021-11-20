@@ -35,24 +35,8 @@ class ProjectResource extends JsonResource
         return $result;
     }
 
-    private function getTags(): array
+    private function getTags(): TagsResourceCollection
     {
-        $tags = [
-            ['name' => 'Kitchen'],
-            ['name' => 'Living'],
-            ['name' => 'Indoor'],
-            ['name' => 'Outdoor'],
-            ['name' => 'Bed Room'],
-            ['name' => 'Modern'],
-            ['name' => 'Classic'],
-        ];
-
-        $keys = array_rand($tags, 3);
-
-        return [
-            $tags[$keys[0]],
-            $tags[$keys[1]],
-            $tags[$keys[2]],
-        ];
+        return new TagsResourceCollection($this->resource->tags);
     }
 }

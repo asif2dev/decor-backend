@@ -19,6 +19,7 @@ class ProfessionalProfileResource extends JsonResource
         return [
             'uid' => $this->resource->uid,
             'companyName' => $this->resource->company_name,
+            'logo' => $this->resource->logo,
             'about' => $this->resource->about,
             'category' => new CategoryResource($this->resource->category),
             'phone1' =>  $this->resource->phone1,
