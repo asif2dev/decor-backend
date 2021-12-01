@@ -53,6 +53,15 @@ return [
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
         ],
 
+        'gcs' => [
+            'driver' => 'gcs',
+            'project_id' => 'egar-market',
+            'key_file' => __DIR__ . '/gcs_key.json',
+            'bucket' => env('GCS_BUCKET', 'egar_market_assets'),
+//            'storage_api_uri' => 'https://storage.googleapis.com/for_rent_assets/',
+            'visibility' => 'public',
+        ],
+
     ],
 
     /*
