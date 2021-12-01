@@ -45,6 +45,7 @@ return [
             'driver' => 'single',
             'path' => storage_path('logs/laravel.log'),
             'level' => env('LOG_LEVEL', 'debug'),
+            'formatter' => \App\Support\Logging\GCloudFormatter::class,
         ],
 
         'daily' => [
@@ -76,7 +77,7 @@ return [
             'driver' => 'monolog',
             'level' => env('LOG_LEVEL', 'debug'),
             'handler' => StreamHandler::class,
-            'formatter' => env('LOG_STDERR_FORMATTER'),
+            'formatter' => \App\Support\Logging\GCloudFormatter::class,
             'with' => [
                 'stream' => 'php://stderr',
             ],

@@ -1,10 +1,10 @@
 <?php
 
 
-namespace App\Modules\SMS;
+namespace App\Modules\LoginVerification;
 
 
-interface SMSInterface
+interface LoginVerificationInterface
 {
     public function sendLoginMessage(string $phone, string $code): bool;
 }

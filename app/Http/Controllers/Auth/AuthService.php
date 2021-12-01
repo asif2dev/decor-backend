@@ -5,13 +5,11 @@ namespace App\Http\Controllers\Auth;
 
 
 use App\Models\User;
-use App\Modules\SMS\SMSInterface;
+use App\Modules\LoginVerification\LoginVerificationInterface;
 use App\Repositories\UserRepository;
-use Illuminate\Contracts\Hashing\Hasher;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\ValidationException;
 use InvalidArgumentException;
 
 class AuthService
@@ -21,7 +19,7 @@ class AuthService
 
     public function __construct(
         private UserRepository $userRepository,
-        private SMSInterface $sms
+        private LoginVerificationInterface $loginVerification
     ) {
     }
 
@@ -56,7 +54,7 @@ class AuthService
         $user->verification_code = $code;
         $user->save();
 
-        return $this->sms->sendLoginMessage($user->phone, $code);
+        return $this->loginVerification->sendLoginMessage($user->phone, $code);
     }
 
     public function logout(User $user): bool

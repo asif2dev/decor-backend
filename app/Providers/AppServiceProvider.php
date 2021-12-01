@@ -4,9 +4,9 @@ namespace App\Providers;
 
 use App\Modules\SearchEngine\DatabaseSearchEngine;
 use App\Modules\SearchEngine\SearchEngineInterface;
-use App\Modules\SMS\ClickSend\ClickSend;
-use App\Modules\SMS\NullSms;
-use App\Modules\SMS\SMSInterface;
+use App\Modules\LoginVerification\ClickSend\ClickSend;
+use App\Modules\LoginVerification\NullLoginVerification;
+use App\Modules\LoginVerification\LoginVerificationInterface;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -25,8 +25,10 @@ class AppServiceProvider extends ServiceProvider
 
 
         $this->app->singleton(
-            SMSInterface::class,
-            fn () => $this->app->make(NullSms::class)
+            LoginVerificationInterface::class,
+            fn () => $this->app->environment('production') === false
+                ? $this->app->make(NullLoginVerification::class)
+                : $this->app->make(ClickSend::class)
         );
     }
 

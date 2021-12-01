@@ -94,6 +94,26 @@ services:
             PMA_HOST: '${DB_HOST}'
             PMA_USER: '${DB_USERNAME}'
             PMA_PASSWORD: '${DB_PASSWORD}'
+
+    cloudsql:
+        image: gcr.io/cloudsql-docker/gce-proxy:1.12
+        container_name: decor-cloudsql
+        volumes:
+            - ./gce.json:/config
+        entrypoint:
+            - /cloud_sql_proxy
+            - -instances=egar-market:us-central1:egarmarket=tcp:0.0.0.0:3306
+            - -credential_file=/config
+
+    phpmyadmin-prod:
+        image: phpmyadmin/phpmyadmin
+        container_name: phpmyadmin-prod
+        environment:
+            PMA_HOST: cloudsql
+            PMA_USER: '${DB_USERNAME}'
+            PMA_PASSWORD: '${DB_PASSWORD}'
+        ports:
+            - "1112:80"
 networks:
     sail:
         driver: bridge

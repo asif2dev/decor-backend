@@ -1,17 +1,17 @@
 <?php
 
 
-namespace App\Modules\SMS\ClickSend;
+namespace App\Modules\LoginVerification\ClickSend;
 
 
-use App\Modules\SMS\SMSInterface;
+use App\Modules\LoginVerification\LoginVerificationInterface;
 use ClickSend\Api\SMSApi;
 use ClickSend\Configuration;
 use ClickSend\Model\SmsMessage;
 use ClickSend\Model\SmsMessageCollection;
 use GuzzleHttp\Client;
 
-class ClickSend implements SMSInterface
+class ClickSend implements LoginVerificationInterface
 {
     private SMSApi $smsApi;
 
