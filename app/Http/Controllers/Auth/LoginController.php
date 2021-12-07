@@ -53,6 +53,8 @@ class LoginController extends Controller
         $phone = $request->get('phone');
         $code = $request->get('code');
 
+        $phone = PhoneNumber::getFormattedPhone($phone);
+
         $user = $this->authService->login($phone, $code);
 
         $authToken = $this->authService->createAuthToken($user);
