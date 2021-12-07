@@ -22,6 +22,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', function () {
+    return ['apiVersion' => '1.0.0', 'isLogged' => request()->user() !== null];
+});
+
 Route::get('env', [EnvController::class, 'get']);
 
 Route::get('categories', [CategoriesController::class, 'getAll']);

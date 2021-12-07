@@ -2,7 +2,7 @@
 .DEFAULT_GOAL:=help
 
 enter:
-	docker exec -it backend-laravel.test-1 bash
+	docker exec -it backend_laravel.test_1 bash
 
 help: ## Prints help about targets.
 	@printf "Usage:             make [\033[34mtarget\033[0m]\n"

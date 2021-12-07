@@ -58,7 +58,7 @@ return [
             'project_id' => 'egar-market',
             'key_file' => __DIR__ . '/gcs_key.json',
             'bucket' => env('GCS_BUCKET', 'egar_market_assets'),
-//            'storage_api_uri' => 'https://storage.googleapis.com/for_rent_assets/',
+            'storage_api_uri' => 'https://storage.googleapis.com/for_rent_assets/',
             'visibility' => 'public',
         ],
 

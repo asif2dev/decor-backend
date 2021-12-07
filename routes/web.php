@@ -14,5 +14,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return ['apiVersion' => '1.0.0', 'isLogged' => request()->user() !== null];
 });
