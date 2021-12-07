@@ -30,6 +30,8 @@ class LoginController extends Controller
             abort(422);
         }
 
+        $phone = PhoneNumber::getFormattedPhone($phone);
+
         $user = $this->authService->getUserByPhone($phone);
         if ($user === null) {
             $user = $this->authService->register($phone);

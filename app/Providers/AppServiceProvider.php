@@ -26,9 +26,7 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->singleton(
             LoginVerificationInterface::class,
-            fn () => $this->app->environment('production') === false
-                ? $this->app->make(NullLoginVerification::class)
-                : $this->app->make(ClickSend::class)
+            fn () => $this->app->make(NullLoginVerification::class)
         );
     }
 

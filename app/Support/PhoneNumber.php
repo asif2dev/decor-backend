@@ -5,6 +5,7 @@ namespace App\Support;
 
 
 use JetBrains\PhpStorm\ArrayShape;
+use JetBrains\PhpStorm\Pure;
 
 class PhoneNumber
 {
@@ -22,6 +23,17 @@ class PhoneNumber
             'country' => $country,
             'phone' => $phone
         ];
+    }
+
+    #[Pure] public static function getFormattedPhone(string $phone): string
+    {
+        [$country, $phone] = explode(' ', $phone, 2);
+        if (Str::startsWith($phone, '0')) {
+            $phone = ltrim($phone, '0');
+            $phone = str_replace([' ', '.', '-', '(', ')'], '', $phone);
+        }
+
+        return $country . $phone;
     }
 
     public static function isValid(string $phone): bool
