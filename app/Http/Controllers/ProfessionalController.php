@@ -9,7 +9,9 @@ use App\Http\Resources\ProfessionalResource;
 use App\Http\Resources\ProfessionalResourceCollection;
 use App\Modules\SearchEngine\SearchEngineInterface;
 use App\Services\ProfessionalService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProfessionalController extends Controller
@@ -30,8 +32,32 @@ class ProfessionalController extends Controller
         return new ProfessionalProfileResource($professional);
     }
 
-    public function store(CreateProfessionalRequest $request): ProfessionalResource
+    public function store(Request $request): JsonResponse|ProfessionalResource
     {
+        logger()->info('Professional requests', [
+            'payload' => $request->all()
+        ]);
+
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'companyName' => 'required',
+                'about' => 'required',
+                'categoryId' => 'required',
+                'phone1' => 'required|min:11',
+                'latLng' => 'required',
+                'fullAddress' => 'required',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json(
+                ['errors' => $validator->getMessageBag()->all()],
+                Response::HTTP_UNPROCESSABLE_ENTITY
+            );
+        }
+
+
         $user = $request->user();
         $logo = $request->file('logo');
 
