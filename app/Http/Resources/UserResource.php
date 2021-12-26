@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources;
 
-use App\Support\PhoneNumber;
+use App\Support\PhoneNumberHelper;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 

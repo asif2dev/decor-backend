@@ -34,10 +34,6 @@ class ProfessionalController extends Controller
 
     public function store(Request $request): JsonResponse|ProfessionalResource
     {
-        logger()->info('Professional requests', [
-            'payload' => $request->all()
-        ]);
-
         $validator = Validator::make(
             $request->all(),
             [

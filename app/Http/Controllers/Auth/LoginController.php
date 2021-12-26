@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Support\PhoneNumber;
+use App\Support\PhoneNumberHelper;
 use App\Support\VerificationCode;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -26,11 +26,11 @@ class LoginController extends Controller
         }
 
         $phone = $request->get('phone');
-        if (PhoneNumber::isValid($phone) === false) {
+        if (PhoneNumberHelper::isValid($phone) === false) {
             abort(422);
         }
 
-        $phone = PhoneNumber::getFormattedPhone($phone);
+        $phone = PhoneNumberHelper::getFormattedPhone($phone);
 
         $user = $this->authService->getUserByPhone($phone);
         if ($user === null) {
@@ -53,7 +53,7 @@ class LoginController extends Controller
         $phone = $request->get('phone');
         $code = $request->get('code');
 
-        $phone = PhoneNumber::getFormattedPhone($phone);
+        $phone = PhoneNumberHelper::getFormattedPhone($phone);
 
         $user = $this->authService->login($phone, $code);
 
