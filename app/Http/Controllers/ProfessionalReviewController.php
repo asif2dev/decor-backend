@@ -16,7 +16,7 @@ class ProfessionalReviewController extends Controller
     ) {
     }
 
-    public function getReviews(int $uid): ProfessionalReviewResourceCollection
+    public function getReviews(string $uid): ProfessionalReviewResourceCollection
     {
         $professional = $this->professionalService->getByUid($uid);
         if (!$professional) {
@@ -36,6 +36,7 @@ class ProfessionalReviewController extends Controller
         }
 
         $data = $request->all();
+
         $data['user_id'] = $request->user()->id;
 
         return new ProfessionalReviewResource(

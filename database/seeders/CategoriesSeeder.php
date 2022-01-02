@@ -20,18 +20,18 @@ class CategoriesSeeder extends Seeder
     {
         $categories = json_decode(file_get_contents(__DIR__. '/categories.json'), true);
         foreach ($categories as $category) {
-            $cat = Category::where('id', $category['id'])->first();
-            if ($cat) {
-                continue;
-            }
-
             $image = resource_path("services/$category[id].jpeg");
-            $path = Storage::putFile('categories', new File($image));
+            $path = Storage::disk('gcs')->putFile('categories', new File($image));
 
             $category['slug'] = Str::arSlug($category['name']);
-            $category['photo'] = Storage::url($path);
+            $category['photo'] = Storage::disk('gcs')->url($path);
 
-            Category::create($category);
+            $cat = Category::where('id', $category['id'])->first();
+            if ($cat) {
+                Category::where('id', $cat->id)->update($category);
+            } else {
+                Category::create($category);
+            }
         }
     }
 }
