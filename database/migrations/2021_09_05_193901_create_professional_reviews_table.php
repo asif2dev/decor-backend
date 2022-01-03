@@ -17,7 +17,7 @@ class CreateProfessionalReviewsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('professional_id');
-            $table->text('comment');
+            $table->text('comment')->nullable();
             $table->smallInteger('rating');
             $table->timestamps();
         });

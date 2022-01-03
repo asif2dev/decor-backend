@@ -29,7 +29,6 @@ class ProfessionalProfileResource extends JsonResource
             'projectsCount' =>  $this->resource->projects()->count(),
             'reviewsCount' => $this->resource->reviews()->count(),
             'rating' => (float) ($this->resource->reviews()->avg('rating') ?? 0),
-            'reviews' => new ProfessionalReviewResourceCollection($this->resource->reviews),
             'projects' => $this->getProjects()
         ];
     }
