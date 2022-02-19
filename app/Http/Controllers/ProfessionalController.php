@@ -39,7 +39,7 @@ class ProfessionalController extends Controller
             [
                 'companyName' => 'required',
                 'about' => 'required',
-                'categoryId' => 'required',
+                'categories' => 'required|array',
                 'phone1' => 'required|min:11',
                 'latLng' => 'required',
                 'fullAddress' => 'required',

@@ -1,7 +1,8 @@
 # For more information: https://laravel.com/docs/sail
 version: '3'
 services:
-    laravel.test:
+    app:
+        container_name: decor.app
         build:
             context: ./vendor/laravel/sail/runtimes/8.0
             dockerfile: Dockerfile
@@ -25,11 +26,11 @@ services:
             - mysql
             - redis
             - meilisearch
-            - selenium
     mysql:
+        container_name: decor.mysql
         image: 'mysql:8.0'
         ports:
-            - '${FORWARD_DB_PORT:-3377}:3306'
+            - '${FORWARD_DB_PORT:-3388}:3306'
         environment:
             MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
             MYSQL_DATABASE: '${DB_DATABASE}'
@@ -41,10 +42,11 @@ services:
         networks:
             - sail
         healthcheck:
-          test: ["CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}"]
-          retries: 3
-          timeout: 5s
+            test: [ "CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}" ]
+            retries: 3
+            timeout: 5s
     redis:
+        container_name: decor.redis
         image: 'redis:alpine'
         ports:
             - '${FORWARD_REDIS_PORT:-6399}:6379'
@@ -53,10 +55,11 @@ services:
         networks:
             - sail
         healthcheck:
-          test: ["CMD", "redis-cli", "ping"]
-          retries: 3
-          timeout: 5s
+            test: [ "CMD", "redis-cli", "ping" ]
+            retries: 3
+            timeout: 5s
     meilisearch:
+        container_name: decor.meilisearch
         image: 'getmeili/meilisearch:latest'
         ports:
             - '${FORWARD_MEILISEARCH_PORT:-7700}:7700'
@@ -65,24 +68,20 @@ services:
         networks:
             - sail
         healthcheck:
-          test: ["CMD", "wget", "--no-verbose", "--spider",  "http://localhost:7700/health"]
-          retries: 3
-          timeout: 5s
+            test: [ "CMD", "wget", "--no-verbose", "--spider",  "http://localhost:7700/health" ]
+            retries: 3
+            timeout: 5s
     mailhog:
+        container_name: decor.mailhog
         image: 'mailhog/mailhog:latest'
         ports:
             - '${FORWARD_MAILHOG_PORT:-1025}:1025'
             - '${FORWARD_MAILHOG_DASHBOARD_PORT:-8025}:8025'
         networks:
             - sail
-    selenium:
-       image: 'selenium/standalone-chrome'
-       volumes:
-            - '/dev/shm:/dev/shm'
-       networks:
-           - sail
 
     phpmyadmin:
+        container_name: decor.phpmyadmin
         image: phpmyadmin
         restart: always
         networks:

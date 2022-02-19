@@ -25,9 +25,9 @@ class Professional extends Model
         'full_address'
     ];
 
-    public function category(): BelongsTo
+    public function categories(): BelongsToMany
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsToMany(Category::class, 'professional_categories');
     }
 
     public function projects(): HasMany

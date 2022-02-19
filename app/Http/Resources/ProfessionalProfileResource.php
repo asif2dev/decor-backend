@@ -5,7 +5,6 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Collection;
-use JetBrains\PhpStorm\Pure;
 
 class ProfessionalProfileResource extends JsonResource
 {
@@ -21,7 +20,7 @@ class ProfessionalProfileResource extends JsonResource
             'companyName' => $this->resource->company_name,
             'logo' => $this->resource->logo,
             'about' => $this->resource->about,
-            'category' => new CategoryResource($this->resource->category),
+            'categories' => new CategoryResourceCollection($this->resource->categories),
             'phone1' =>  $this->resource->phone1,
             'phone2' =>  $this->resource->phone2,
             'latLng' =>  $this->resource->lat_lng,
