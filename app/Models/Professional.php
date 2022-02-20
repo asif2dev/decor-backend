@@ -17,8 +17,6 @@ class Professional extends Model
         'company_name',
         'about',
         'logo',
-        'offer_execution',
-        'category_id',
         'phone1',
         'phone2',
         'lat_lng',

@@ -4,8 +4,11 @@
 enter:
 	docker exec -it backend-laravel.test-1 bash
 
-migrate:
+migrate-fresh:
 	docker-compose run --rm --entrypoint "php artisan migrate:fresh --seed" app
+
+migrate:
+	docker-compose run --rm --entrypoint "php artisan migrate" app
 
 help: ## Prints help about targets.
 	@printf "Usage:             make [\033[34mtarget\033[0m]\n"

@@ -29,9 +29,10 @@ class ProfessionalService
         $logoPath = $this->professionalImage->uploadImage($logo);
 
         $data['logo'] = $logoPath;
-        $data['offer_execution'] = (bool) $data['execution'];
+        $data['offer_execution'] = false;
 
         $professional = $this->professionalRepository->create($data);
+        $professional->categories()->sync($data['categories']);
 
         $professional->users()->attach($user->id);
 
@@ -68,6 +69,7 @@ class ProfessionalService
         }
 
         $professional = $this->professionalRepository->update($professional, $data);
+        $professional->categories()->sync($data['categories']);
 
         if ($logo) {
             $this->professionalImage->removeImage($oldImage);
