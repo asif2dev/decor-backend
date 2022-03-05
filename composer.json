@@ -9,9 +9,12 @@
         "clicksend/clicksend-php": "^5.0",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
+        "http-interop/http-factory-guzzle": "^1.2",
         "laravel/framework": "^8.54",
         "laravel/sanctum": "^2.11",
+        "laravel/scout": "^9.4",
         "laravel/tinker": "^2.5",
+        "meilisearch/meilisearch-php": "^0.22.0",
         "propaganistas/laravel-phone": "^4.3",
         "superbalist/laravel-google-cloud-storage": "^2.2"
     },

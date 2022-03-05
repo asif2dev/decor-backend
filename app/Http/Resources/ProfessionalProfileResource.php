@@ -25,6 +25,7 @@ class ProfessionalProfileResource extends JsonResource
             'phone2' =>  $this->resource->phone2,
             'latLng' =>  $this->resource->lat_lng,
             'fullAddress' =>  $this->resource->full_address,
+            'workScope' =>  $this->resource->work_scope,
             'projectsCount' =>  $this->resource->projects()->count(),
             'reviewsCount' => $this->resource->reviews()->count(),
             'rating' => (float) ($this->resource->reviews()->avg('rating') ?? 0),

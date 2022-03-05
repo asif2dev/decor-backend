@@ -15,6 +15,7 @@ services:
             - '${APP_PORT:-80}:80'
         environment:
             WWWUSER: '${WWWUSER}'
+
             LARAVEL_SAIL: 1
             XDEBUG_MODE: '${SAIL_XDEBUG_MODE:-off}'
             XDEBUG_CONFIG: '${SAIL_XDEBUG_CONFIG:-client_host=host.docker.internal}'
@@ -62,11 +63,15 @@ services:
         container_name: decor.meilisearch
         image: 'getmeili/meilisearch:latest'
         ports:
-            - '${FORWARD_MEILISEARCH_PORT:-7700}:7700'
+            - '7700:7700'
+        expose:
+            -   7700
         volumes:
             - 'sailmeilisearch:/data.ms'
         networks:
             - sail
+        environment:
+            MEILI_MASTER_KEY: Some-master-key-123
         healthcheck:
             test: [ "CMD", "wget", "--no-verbose", "--spider",  "http://localhost:7700/health" ]
             retries: 3

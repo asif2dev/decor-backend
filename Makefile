@@ -2,7 +2,7 @@
 .DEFAULT_GOAL:=help
 
 enter:
-	docker exec -it backend-laravel.test-1 bash
+	docker exec -it decor.app bash
 
 migrate-fresh:
 	docker-compose run --rm --entrypoint "php artisan migrate:fresh --seed" app

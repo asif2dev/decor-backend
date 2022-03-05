@@ -69,7 +69,9 @@ class ProfessionalService
         }
 
         $professional = $this->professionalRepository->update($professional, $data);
-        $professional->categories()->sync($data['categories']);
+        if (isset($data['categories'])) {
+            $professional->categories()->sync($data['categories']);
+        }
 
         if ($logo) {
             $this->professionalImage->removeImage($oldImage);
