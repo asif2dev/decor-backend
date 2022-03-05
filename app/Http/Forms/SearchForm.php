@@ -15,6 +15,11 @@ class SearchForm
         return $this->formData['cat'] ?? '';
     }
 
+    public function getCity(): string
+    {
+        return $this->formData['city'] ?? '';
+    }
+
     public function isSortByRating(): bool
     {
         return isset($this->formData['sort']) && $this->formData['sort'] === 'rating';

@@ -11,7 +11,7 @@ use Laravel\Scout\Searchable;
 
 class Professional extends Model
 {
-    use HasFactory, Searchable;
+    use HasFactory;
 
     protected $fillable = [
         'uid',

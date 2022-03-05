@@ -6,6 +6,7 @@ namespace App\Repositories;
 
 use App\Http\Forms\SearchForm;
 use App\Models\Professional;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
 class ProfessionalRepository extends BaseRepository
@@ -41,7 +42,15 @@ class ProfessionalRepository extends BaseRepository
     public function search(SearchForm $searchForm): Collection
     {
         $query = (new Professional())->newQuery();
-        $query->when($searchForm->getCategory(), fn($q) => $q->whereRelation('category', 'slug', $searchForm->getCategory()));
+        $query->when(
+            $searchForm->getCategory(),
+            fn($q) => $q->whereRelation('categories', 'slug', $searchForm->getCategory())
+        );
+
+        $query->when(
+            $searchForm->getCity(),
+            fn(Builder $q) => $q->where('work_scope', 'like', '%' . $searchForm->getCity() . '%')
+        );
 
         return $query->get();
     }
