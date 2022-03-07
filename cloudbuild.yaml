@@ -15,6 +15,7 @@ steps:
       - GCS_KEY_FILE
       - ALGOLIA_APP_ID
       - ALGOLIA_SECRET
+      - TWILIO_TOKEN
   - name: gcr.io/cloud-builders/docker
     args:
       - build
