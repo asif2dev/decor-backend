@@ -1,6 +1,6 @@
 <?php
 
-namespace App\SearchEngines;
+namespace App\Modules\SearchEngine;
 
 use App\Http\Resources\ProfessionalResource;
 use App\Models\Professional as ProfessionalModel;

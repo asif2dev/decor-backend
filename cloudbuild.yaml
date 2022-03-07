@@ -77,3 +77,5 @@ availableSecrets:
       env: ALGOLIA_APP_ID
     - versionName: projects/403554860093/secrets/ALGOLIA_SECRET/versions/latest
       env: ALGOLIA_SECRET
+    - versionName: projects/403554860093/secrets/TWILIO_TOKEN/versions/latest
+      env: TWILIO_TOKEN

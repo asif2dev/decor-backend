@@ -2,12 +2,11 @@
 
 namespace App\Models;
 
-use App\SearchEngines\ProfessionalNormalizer;
+use App\Modules\SearchEngine\ProfessionalNormalizer;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Laravel\Scout\Searchable;
 
 class Professional extends Model
 {

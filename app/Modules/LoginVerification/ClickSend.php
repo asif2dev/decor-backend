@@ -1,10 +1,9 @@
 <?php
 
 
-namespace App\Modules\LoginVerification\ClickSend;
+namespace App\Modules\LoginVerification;
 
 
-use App\Modules\LoginVerification\LoginVerificationInterface;
 use ClickSend\Api\SMSApi;
 use ClickSend\Configuration;
 use ClickSend\Model\SmsMessage;
@@ -29,7 +28,7 @@ class ClickSend implements LoginVerificationInterface
         $msg = new SmsMessage();
         $msg->setBody(" رمز التحقق الخاص بك هو " . $code);
         $msg->setTo($phone);
-        $msg->setSource("Decor Test Webapp");
+        $msg->setSource("نص تشتطيب");
 
         $smsMessages = new SmsMessageCollection();
         $smsMessages->setMessages([$msg]);
