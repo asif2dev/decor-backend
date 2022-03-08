@@ -17,8 +17,8 @@ class ClickSend implements LoginVerificationInterface
     public function __construct()
     {
         $config = Configuration::getDefaultConfiguration()
-            ->setUsername('mohamed.n.haleem@gmail.com')
-            ->setPassword('257E9F48-1301-71A9-21B6-DFD39E81B67B');
+            ->setUsername(config('sms.clickSend.username'))
+            ->setPassword(config('sms.clickSend.password'));
 
         $this->smsApi = new SMSApi(new Client(), $config);
     }

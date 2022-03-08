@@ -16,7 +16,7 @@ class SmsGateway implements LoginVerificationInterface
     public function __construct(private LoggerInterface $logger)
     {
         $config = Configuration::getDefaultConfiguration();
-        $config->setApiKey('Authorization', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhZG1pbiIsImlhdCI6MTY0NjU5OTA1NSwiZXhwIjo0MTAyNDQ0ODAwLCJ1aWQiOjkzMzQyLCJyb2xlcyI6WyJST0xFX1VTRVIiXX0.WYRQH39GaWwSUCBOvRnFRIWHNf0wfCb41jKY9n_565A');
+        $config->setApiKey('Authorization', config('sms.smsGateway.token'));
         $apiClient = new ApiClient($config);
         $this->messageApi = new MessageApi($apiClient);
     }

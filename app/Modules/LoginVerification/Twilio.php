@@ -12,8 +12,8 @@ class Twilio implements LoginVerificationInterface
     public function __construct(private LoggerInterface $logger)
     {
         $this->client = new Client(
-            config('twilio.sid'),
-            config('twilio.token')
+            config('sms.twilio.sid'),
+            config('sms.twilio.token')
         );
     }
 
@@ -24,7 +24,7 @@ class Twilio implements LoginVerificationInterface
             $this->client->messages->create(
                 $phone,
                 [
-                    'from' => config('twilio.from'),
+                    'from' => config('sms.twilio.from'),
                     'body' => " رمز التحقق الخاص بك هو " . $code
                 ]
             );
