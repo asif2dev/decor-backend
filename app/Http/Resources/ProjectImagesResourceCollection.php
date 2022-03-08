@@ -3,10 +3,11 @@
 namespace App\Http\Resources;
 
 use App\Models\ProjectImage;
+use App\Modules\Images\ProjectThumb;
+use App\Modules\Images\ProjectImage as ProjectImagePath;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
-use Illuminate\Support\Facades\Storage;
 
 class ProjectImagesResourceCollection extends ResourceCollection
 {
@@ -30,8 +31,8 @@ class ProjectImagesResourceCollection extends ResourceCollection
             function (ProjectImage $image) {
                 return [
                     'id' => $image->id,
-                    'src' => $image->path,
-                    'thumbnail' => $image->path
+                    'src' => new ProjectImagePath($image->path),
+                    'thumbnail' => new ProjectThumb($image->path)
                 ];
             }
         );

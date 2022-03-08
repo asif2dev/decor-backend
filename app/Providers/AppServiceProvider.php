@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Modules\Images\Providers\ImageKit;
+use App\Modules\Images\Providers\ImageProviderInterface;
+use App\Modules\Images\Providers\Local;
 use App\Modules\LoginVerification\LoginVerificationInterface;
 use App\Modules\LoginVerification\SmsProviderFactory;
 use App\Modules\SearchEngine\DatabaseSearchEngine;
@@ -26,6 +29,17 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(
             LoginVerificationInterface::class,
             fn () => SmsProviderFactory::create($this->app, config('sms.provider'))
+        );
+
+        $this->app->singleton(
+            ImageProviderInterface::class,
+            function () {
+                if ($this->app->environment('local')) {
+                    return new Local();
+                }
+
+                return new ImageKit();
+            }
         );
     }
 

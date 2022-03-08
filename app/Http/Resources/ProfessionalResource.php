@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Modules\Images\ProfessionalLogo;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Collection;
@@ -24,7 +25,7 @@ class ProfessionalResource extends JsonResource
             'uid' => $this->resource->uid,
             'companyName' => $this->resource->company_name,
             'about' => $this->resource->about,
-            'logo' => $this->resource->logo,
+            'logo' => new ProfessionalLogo($this->resource->logo),
             'categories' => new CategoryResourceCollection($this->resource->categories),
             'phone1' =>  $this->parsePhone($this->resource->phone1),
             'phone2' =>  $this->parsePhone($this->resource->phone2),
