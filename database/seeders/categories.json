@@ -1,146 +1,139 @@
 [
     {
-        "id": 1,
-        "name": "تصميم داخلي وخارجي",
+        "name": "تصميم خارجي",
         "photo": "",
-        "slug": "",
+        "slug": "exterior-design",
         "description": ""
     },
     {
-        "id":  2,
+        "name": "تصميم داخلي",
+        "photo": "",
+        "slug": "interior-design",
+        "description": ""
+    },
+    {
+        "name": "تشطيب وتنفيذ",
+        "photo": "",
+        "slug": "finishing",
+        "description": ""
+    },
+    {
         "name": "مطابخ",
         "photo": "",
-        "slug":  "",
+        "slug":  "kitchens",
         "description":  ""
     },
     {
-        "id":  3,
         "name": "اعمال نجارة",
         "photo": "",
-        "slug":  "",
+        "slug":  "carpenter",
         "description":  ""
     },
     {
-        "id":  4,
         "name": "اعمال كهرباء",
         "photo": "",
-        "slug":  "",
+        "slug":  "electricians",
         "description":  ""
     },
     {
-        "id":  5,
         "name": "أجهزة منزلية وإلكترونية",
         "photo": "",
-        "slug":  "",
+        "slug":  "appliances",
         "description":  ""
     },
     {
-        "id":  6,
         "name": "تكييفات (تبريد وتسخين)",
         "photo": "",
-        "slug":  "",
+        "slug":  "air-conditions",
         "description":  ""
     },
     {
-        "id":  7,
         "name": "سباك",
         "photo": "",
-        "slug":  "",
+        "slug":  "plumbers",
         "description":  ""
     },
     {
-        "id":  8,
         "name": "أبواب",
         "photo": "",
-        "slug":  "",
+        "slug":  "doors",
         "description":  ""
     },
     {
-        "id":  9,
         "name": "أرضيات",
         "photo": "",
-        "slug":  "",
+        "slug":  "floors",
         "description":  ""
     },
     {
-        "id":  10,
         "name": "نوافذ",
         "photo": "",
-        "slug":  "",
+        "slug":  "windows",
         "description":  ""
     },
     {
-        "id":  11,
         "name": "إصلاح أثاث",
         "photo": "",
-        "slug":  "",
+        "slug":  "fix-furniture",
         "description":  ""
     },
     {
-        "id":  12,
         "name": "زجاج و كابينات حمام",
         "photo": "",
-        "slug":  "",
+        "slug":  "glass-and-bathroom",
         "description":  ""
     },
     {
-        "id":  13,
         "name": "أعمال حدادة",
         "photo": "",
-        "slug":  "",
+        "slug":  "irons",
         "description":  ""
     },
     {
-        "id":  14,
         "name": "أضائات",
         "photo": "",
-        "slug":  "",
+        "slug":  "lighting",
         "description":  ""
     },
     {
-        "id":  15,
         "name": "أعمال يدوية",
         "photo": "",
-        "slug":  "",
+        "slug":  "hand-work",
         "description":  ""
     },
     {
-        "id":  16,
         "name": "نقاش ودهانات",
         "photo": "",
-        "slug":  "",
+        "slug":  "painters",
         "description":  ""
     },
     {
-        "id":  17,
         "name": "خدمات النقل",
         "photo": "",
-        "slug":  "",
+        "slug":  "transporters",
         "description":  ""
     },
     {
-        "id":  18,
         "name": "أسطح",
         "photo": "",
-        "slug":  "",
+        "slug":  "roof",
         "description":  ""
     },
     {
-        "id":  19,
         "name": "حدائق وعناية بالعشب",
         "photo": "",
-        "slug":  "",
+        "slug":  "gardens",
         "description":  ""
     },
     {
-        "id":  20,
         "name": "أعمال وصيانة حمامات سباحة",
         "photo": "",
-        "slug":  "",
+        "slug":  "pools",
         "description":  ""
     },
     {
-        "id":  21,
-        "name": "البلاط والحجر والكونترتوب"
+        "name": "البلاط والحجر والكونترتوب",
+        "slug":  "Tiles",
+        "description":  ""
     }
 ]
