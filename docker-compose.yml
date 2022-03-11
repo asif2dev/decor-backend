@@ -101,7 +101,6 @@ services:
 
     cloudsql:
         image: gcr.io/cloudsql-docker/gce-proxy:1.12
-        container_name: decor-cloudsql
         volumes:
             - ./gce.json:/config
         entrypoint:

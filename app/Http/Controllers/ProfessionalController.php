@@ -40,6 +40,7 @@ class ProfessionalController extends Controller
                 'companyName' => 'required',
                 'about' => 'required',
                 'categories' => 'required|array',
+                'workScope' => 'required',
                 'phone1' => 'required|min:11',
                 'latLng' => 'required',
                 'fullAddress' => 'required',
