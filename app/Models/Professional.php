@@ -22,6 +22,11 @@ class Professional extends Model
         'lat_lng',
         'full_address',
         'work_scope',
+        'social'
+    ];
+
+    protected $casts = [
+        'social' => 'array'
     ];
 
     public function categories(): BelongsToMany
