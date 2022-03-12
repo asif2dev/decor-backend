@@ -29,6 +29,7 @@ class ProfessionalProfileResource extends JsonResource
             'projectsCount' =>  $this->resource->projects()->count(),
             'reviewsCount' => $this->resource->reviews()->count(),
             'rating' => (float) ($this->resource->reviews()->avg('rating') ?? 0),
+            'social' => $this->parseSocial($this->resource->social),
             'projects' => $this->getProjects()
         ];
     }
@@ -41,5 +42,21 @@ class ProfessionalProfileResource extends JsonResource
         }
 
         return $projects;
+    }
+
+    private function parseSocial(?array $social = null): array
+    {
+        $result = [
+            'facebook' => null,
+            'youtube' => null,
+            'instagram' => null,
+            'behance' => null,
+        ];
+
+        if ($social === null) {
+            return $result;
+        }
+
+        return array_merge($result, $social);
     }
 }
