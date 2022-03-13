@@ -62,6 +62,8 @@ Route::get('/projects/{uid}', [ProjectController::class, 'get']);
 Route::group(
     ['prefix' => 'professionals', 'middleware' => 'auth:sanctum'],
     static function () {
+        Route::post('/{professionalUid}/projects/{id}/update', [ProjectController::class, 'update']);
+        Route::delete('/{professionalUid}/projects/{id}/delete', [ProjectController::class, 'delete']);
         Route::post('/{professionalUid}/projects', [ProjectController::class, 'store']);
         Route::post('/{professionalUid}/reviews', [ProfessionalReviewController::class, 'writeReview']);
         Route::post('/{professionalUid}', [ProfessionalController::class, 'update']);

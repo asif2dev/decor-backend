@@ -46,4 +46,21 @@ class ProjectRepository extends BaseRepository
     {
         return Project::find($id);
     }
+
+    public function update(Project $project, array $data): void
+    {
+        $data = $this->convertToSnakeCase($data);
+
+        Project::where('id', $project->id)->update(
+            [
+                'title' => $data['title'],
+                'description' => $data['description'],
+            ]
+        );
+    }
+
+    public function delete(Project $project): void
+    {
+        Project::where('id', $project->id)->delete();
+    }
 }

@@ -6,8 +6,7 @@ namespace App\Services;
 
 use App\Models\Professional;
 use App\Models\Project;
-use App\Models\User;
-use App\Repositories\ProfessionalRepository;
+use App\Models\ProjectImage;
 use App\Repositories\ProjectRepository;
 use App\Repositories\TagsRepository;
 use App\Services\Images\ImageHandlerInterface;
@@ -52,5 +51,46 @@ class ProjectService
     public function getById(int $id): ?Project
     {
         return $this->projectRepository->getById($id);
+    }
+
+    public function update(
+        Project $project,
+        array $data,
+        array $images
+    ): void {
+        $deletedImages = $project->images()
+            ->whereNotIn('id', $data['currentImages'])
+            ->get();
+
+        foreach ($deletedImages as $image) {
+            /** @var ProjectImage $image*/
+            $this->projectImage->removeImage($image->path);
+        }
+        $project->images()->whereNotIn('id', $data['currentImages'])->delete();
+
+        $tags = $this->tagsRepository->syncTags($data['tags']);
+
+        $project->tags()->sync($tags->pluck('id')->flatten()->toArray());
+
+        if (!empty($images)) {
+            $paths = [];
+            foreach ($images as $image) {
+                $paths[] = $this->projectImage->uploadImage($image);
+            }
+            $this->projectRepository->addProjectImages($project, $paths);
+        }
+
+        $this->projectRepository->update($project, $data);
+    }
+
+    public function delete(Project $project): void
+    {
+//        foreach ($project->images as $image) {
+//            /** @var ProjectImage $image*/
+//            $this->projectImage->removeImage($image->path);
+//        }
+//        $project->images()->delete();
+
+        $this->projectRepository->delete($project);
     }
 }
