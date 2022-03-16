@@ -31,7 +31,7 @@ class Twilio implements LoginVerificationInterface
 
             return true;
         } catch (\Throwable $exception) {
-            $this->logger->error('SmsGateway: failed to send sms', [
+            $this->logger->error('Twilio: failed to send sms', [
                 'message' => $exception->getMessage(),
                 'exception' => $exception
             ]);
