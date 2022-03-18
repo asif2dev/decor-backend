@@ -10,7 +10,6 @@ class SmsProviderFactory
     {
         return match($provider) {
             'clickSend' => $application->make(ClickSend::class),
-            'smsGateway' => $application->make(SmsGateway::class),
             'twilio' => $application->make(Twilio::class),
             default => $application->make(NullLoginVerification::class)
         };

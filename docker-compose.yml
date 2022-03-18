@@ -88,16 +88,15 @@ services:
     phpmyadmin:
         container_name: decor.phpmyadmin
         image: phpmyadmin
-        restart: always
         networks:
             - sail
-        ports:
-            - 1111:80
         environment:
             PMA_ARBITRARY: 1
             PMA_HOST: '${DB_HOST}'
             PMA_USER: '${DB_USERNAME}'
             PMA_PASSWORD: '${DB_PASSWORD}'
+        ports:
+            - "1111:80"
 
     cloudsql:
         image: gcr.io/cloudsql-docker/gce-proxy:1.12
