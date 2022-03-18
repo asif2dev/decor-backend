@@ -63,6 +63,7 @@ class ProfessionalService
 
     public function update(Professional $professional, array $data, ?UploadedFile $logo = null): Professional
     {
+        unset($data['logo']);
         $oldImage = $professional->logo;
         if ($logo) {
             $data['logo'] = $this->professionalImage->uploadImage($logo);
