@@ -9,6 +9,8 @@ use App\Support\VerificationCode;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use InvalidArgumentException;
+use Throwable;
 
 class LoginController extends Controller
 {
@@ -37,9 +39,7 @@ class LoginController extends Controller
             $user = $this->authService->register($phone);
         }
 
-        $code = VerificationCode::generate();
-
-        $this->authService->sendSms($user, $code);
+        $this->authService->sendSms($user);
 
         return response()->json([]);
     }
@@ -55,11 +55,17 @@ class LoginController extends Controller
 
         $phone = PhoneNumberHelper::getFormattedPhone($phone);
 
-        $user = $this->authService->login($phone, $code);
+        try {
+            $user = $this->authService->login($phone, $code);
 
-        $authToken = $this->authService->createAuthToken($user);
+            $authToken = $this->authService->createAuthToken($user);
 
-        return response()->json(['authToken' => $authToken]);
+            return response()->json(['authToken' => $authToken]);
+        } catch (InvalidArgumentException $exception) {
+            return response()->json([], 422);
+        } catch (Throwable $exception) {
+            return response()->json([], 500);
+        }
     }
 
     public function logout(Request $request): JsonResponse

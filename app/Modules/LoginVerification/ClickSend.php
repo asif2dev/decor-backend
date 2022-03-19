@@ -23,7 +23,7 @@ class ClickSend implements LoginVerificationInterface
         $this->smsApi = new SMSApi(new Client(), $config);
     }
 
-    public function sendLoginMessage(string $phone, string $code): bool
+    public function sendLoginMessage(string $phone, ?string $code = null): bool
     {
         $msg = new SmsMessage();
         $msg->setBody(" رمز التحقق الخاص بك هو " . $code);
@@ -34,5 +34,10 @@ class ClickSend implements LoginVerificationInterface
         $smsMessages->setMessages([$msg]);
 
         return $this->smsApi->smsSendPost($smsMessages);
+    }
+
+    public function verify(string $phone, string $code): bool
+    {
+        return false;
     }
 }

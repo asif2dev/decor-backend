@@ -30,7 +30,7 @@ class AuthService
             throw new ModelNotFoundException('User doesnt exist');
         }
 
-        if ($user->verification_code !== $code) {
+        if ($this->loginVerification->verify($phone, $code) === false) {
             throw new InvalidArgumentException('Invalid input provided');
         }
 
@@ -49,12 +49,9 @@ class AuthService
         return $user->createToken(self::AUTH_TOKEN_NAME)->plainTextToken;
     }
 
-    public function sendSms(User $user, string $code): bool
+    public function sendSms(User $user): bool
     {
-        $user->verification_code = $code;
-        $user->save();
-
-        return $this->loginVerification->sendLoginMessage($user->phone, $code);
+        return $this->loginVerification->sendLoginMessage($user->phone);
     }
 
     public function logout(User $user): bool

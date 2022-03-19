@@ -9,6 +9,7 @@ return [
     'twilio' => [
         'sid' => env('TWILIO_SID', ''),
         'token' => env('TWILIO_TOKEN', ''),
+        'service_id' => env('TWILIO_SERVICE_ID', ''),
         'from' => '+15854969023'
     ],
 

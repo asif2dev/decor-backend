@@ -17,19 +17,38 @@ class Twilio implements LoginVerificationInterface
         );
     }
 
-
-    public function sendLoginMessage(string $phone, string $code): bool
+    public function verify(string $phone, string $code): bool
     {
         try {
-            $this->client->messages->create(
-                $phone,
-                [
-                    'from' => config('sms.twilio.from'),
-                    'body' => " رمز التحقق الخاص بك هو " . $code
-                ]
-            );
+            $response = $this->client
+                ->verify
+                ->v2
+                ->services(config('sms.twilio.service_id'))
+                ->verificationChecks
+                ->create($code, ['to' => $phone]);
 
-            return true;
+            return $response->status === 'approved';
+        } catch (\Throwable $exception) {
+            $this->logger->error('Twilio: failed to send sms', [
+                'message' => $exception->getMessage(),
+                'exception' => $exception
+            ]);
+
+            return false;
+        }
+    }
+
+    public function sendLoginMessage(string $phone, ?string $code = null): bool
+    {
+        try {
+            $response = $this->client
+                ->verify
+                ->v2
+                ->services(config('sms.twilio.service_id'))
+                ->verifications
+                ->create($phone, 'sms');
+
+            return $response->status === 'pending';
         } catch (\Throwable $exception) {
             $this->logger->error('Twilio: failed to send sms', [
                 'message' => $exception->getMessage(),
