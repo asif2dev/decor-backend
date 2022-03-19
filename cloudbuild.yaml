@@ -16,6 +16,7 @@ steps:
       - ALGOLIA_APP_ID
       - ALGOLIA_SECRET
       - TWILIO_TOKEN
+      - TWILIO_SERVICE_ID
   - name: gcr.io/cloud-builders/docker
     args:
       - build
@@ -80,3 +81,5 @@ availableSecrets:
       env: ALGOLIA_SECRET
     - versionName: projects/403554860093/secrets/TWILIO_TOKEN/versions/latest
       env: TWILIO_TOKEN
+    - versionName: projects/403554860093/secrets/TWILIO_SERVICE_ID/versions/latest
+      env: TWILIO_SERVICE_ID
