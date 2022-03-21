@@ -64,8 +64,8 @@ return [
             'driver' => 'gcs',
             'project_id' => 'egar-market',
             'key_file' => __DIR__ . '/gcs_key.json',
-            'bucket' => env('GCS_BUCKET', 'egar_market_assets'),
-            'storage_api_uri' => 'https://storage.googleapis.com/' . env('GCS_BUCKET', 'egar_market_assets') . '/',
+            'bucket' => env('GCS_BUCKET', 'nostashteeb-assets'),
+            'storage_api_uri' => 'https://storage.googleapis.com/' . env('GCS_BUCKET', 'nostashteeb-assets') . '/',
             'visibility' => 'public',
         ],
 

@@ -104,7 +104,7 @@ services:
             - ./gce.json:/config
         entrypoint:
             - /cloud_sql_proxy
-            - -instances=egar-market:us-central1:egarmarket=tcp:0.0.0.0:3306
+            - -instances=nth-micron-344820:us-central1:nostashteeb=tcp:0.0.0.0:3306
             - -credential_file=/config
 
     phpmyadmin-prod:
@@ -112,8 +112,8 @@ services:
         container_name: phpmyadmin-prod
         environment:
             PMA_HOST: cloudsql
-            PMA_USER: '${DB_USERNAME}'
-            PMA_PASSWORD: '${DB_PASSWORD}'
+            PMA_USER: '${REMOTE_DB_USERNAME}'
+            PMA_PASSWORD: '${REMOTE_DB_PASSWORD}'
         ports:
             - "1112:80"
 networks:
