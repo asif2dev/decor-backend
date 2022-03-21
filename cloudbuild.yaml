@@ -62,15 +62,15 @@ tags:
 timeout: '1600s'
 availableSecrets:
   secretManager:
-    - versionName:projects/815755308049/secrets/DB_PASSWORD/versions/latest
+    - versionName: projects/815755308049/secrets/DB_PASSWORD/versions/latest
       env: DB_PASSWORD
-    - versionName:projects/815755308049/secrets/MAILJET_API_SECRET/versions/latest
+    - versionName: projects/815755308049/secrets/MAILJET_API_SECRET/versions/latest
       env: MAILJET_API_SECRET
-    - versionName:projects/815755308049/secrets/GCS_KEY_FILE/versions/latest
+    - versionName: projects/815755308049/secrets/GCS_KEY_FILE/versions/latest
       env: GCS_KEY_FILE
-    - versionName:projects/815755308049/secrets/ALGOLIA_SECRET/versions/latest
+    - versionName: projects/815755308049/secrets/ALGOLIA_SECRET/versions/latest
       env: ALGOLIA_SECRET
-    - versionName:projects/815755308049/secrets/TWILIO_TOKEN/versions/latest
+    - versionName: projects/815755308049/secrets/TWILIO_TOKEN/versions/latest
       env: TWILIO_TOKEN
-    - versionName:projects/815755308049/secrets/TWILIO_SERVICE_ID/versions/latest
+    - versionName: projects/815755308049/secrets/TWILIO_SERVICE_ID/versions/latest
       env: TWILIO_SERVICE_ID
