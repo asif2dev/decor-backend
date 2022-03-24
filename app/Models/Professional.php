@@ -17,6 +17,7 @@ class Professional extends Model
         'uid',
         'company_name',
         'about',
+        'services',
         'logo',
         'phone1',
         'phone2',

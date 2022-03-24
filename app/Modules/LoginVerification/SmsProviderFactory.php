@@ -11,6 +11,7 @@ class SmsProviderFactory
         return match($provider) {
             'clickSend' => $application->make(ClickSend::class),
             'twilio' => $application->make(Twilio::class),
+            'local' => $application->make(LocalLoginVerification::class),
             default => $application->make(NullLoginVerification::class)
         };
     }
