@@ -10,4 +10,6 @@ use Illuminate\Support\Collection;
 interface SearchEngineInterface
 {
     public function search(SearchForm $searchForm): Collection;
+
+    public function getTopRated(): Collection;
 }

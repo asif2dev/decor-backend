@@ -66,7 +66,7 @@ class ProfessionalController extends Controller
     public function getTopRated(): ProfessionalResourceCollection
     {
         return new ProfessionalResourceCollection(
-            $this->professionalService->getTopRated()
+            $this->searchEngine->getTopRated()
         );
     }
 

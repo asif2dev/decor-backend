@@ -18,4 +18,9 @@ class DatabaseSearchEngine implements SearchEngineInterface
     {
         return $this->professionalService->search($searchForm);
     }
+
+    public function getTopRated(): Collection
+    {
+        return $this->professionalService->getTopRated();
+    }
 }

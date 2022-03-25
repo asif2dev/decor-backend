@@ -22,11 +22,38 @@ class ProfessionalRepository extends BaseRepository
     public function getTopRated(): Collection
     {
         $query = (new Professional())->newQuery();
+        $result = \DB::select(
+            'SELECT
+                            professionals.id, pp.projectsCount, pr.avgReviews
+                        FROM
+                            professionals
+                        LEFT JOIN(
+                            SELECT
+                                COUNT(projects.id) as projectsCount,
+                                professionals.id
+                            FROM
+                                professionals
+                            LEFT JOIN projects ON professionals.id = projects.professional_id
+                            GROUP BY
+                                professionals.id
+                        ) pp ON pp.id = professionals.id
+                        left join (
+                            SELECT
+                                AVG(professional_reviews.rating) as avgReviews,
+                                professionals.id
+                            FROM
+                                professionals
+                            left JOIN professional_reviews ON professionals.id = professional_reviews.professional_id
+                            GROUP BY
+                                professionals.id
+                        ) as pr on pr.id = professionals.id
+                        order by projectsCount desc, avgReviews desc
+                        limit 0, 5'
+        );
 
-        return $query->orderBy('id', 'desc')
-            ->skip(0)
-            ->take(5)
-            ->get();
+        $ids = collect($result)->pluck('id')->flatten()->toArray();
+
+        return $query->whereIn('id', $ids)->get();
     }
 
     public function getByUid(int $uid): ?Professional
