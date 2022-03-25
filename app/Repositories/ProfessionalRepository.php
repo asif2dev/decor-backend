@@ -51,7 +51,7 @@ class ProfessionalRepository extends BaseRepository
                         limit 0, 5'
         );
 
-        $ids = collect($result)->sortByDesc()->pluck('id')->flatten()->toArray();
+        $ids = collect($result)->pluck('id')->flatten()->toArray();
         $idsAsString = implode(',', $ids);
 
         return $query->whereIn('id', $ids)
