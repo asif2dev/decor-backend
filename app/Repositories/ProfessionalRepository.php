@@ -54,6 +54,13 @@ class ProfessionalRepository extends BaseRepository
         $ids = collect($result)->pluck('id')->flatten()->toArray();
         $idsAsString = implode(',', $ids);
 
+
+        logger()->info('top professionals raw query', [
+            'sql' => $query->whereIn('id', $ids)
+                ->orderByRaw("FIND_IN_SET('id','$idsAsString')")
+                ->toSql()
+        ]);
+
         return $query->whereIn('id', $ids)
             ->orderByRaw("FIND_IN_SET('id','$idsAsString')")
             ->get();
