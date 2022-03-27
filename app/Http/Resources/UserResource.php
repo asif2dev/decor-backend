@@ -2,7 +2,8 @@
 
 namespace App\Http\Resources;
 
-use App\Support\PhoneNumberHelper;
+use App\Models\Professional;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -24,7 +25,16 @@ class UserResource extends JsonResource
             'email' => $this->resource->email,
             'phone' => $this->resource->phone,
             'avatar' => 'https://avatars.dicebear.com/api/initials/' . $name . '.svg?background=%237952B3',
-            'professionals' => new ProfessionalResourceCollection($this->resource->professionals)
+            'professionals' => new ProfessionalResourceCollection($this->resource->professionals),
+            'favorites' => $this->getFavorites($this->resource)
         ];
+    }
+
+    private function getFavorites(User $user): array
+    {
+        return $user->favorites
+            ->map(fn (Professional $professional) => $professional->uid)
+            ->flatten()
+            ->toArray();
     }
 }

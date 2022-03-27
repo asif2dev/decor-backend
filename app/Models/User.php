@@ -56,4 +56,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Professional::class, 'professional_users');
     }
+
+    public function favorites(): BelongsToMany
+    {
+        return $this->belongsToMany(Professional::class, 'user_favorite_professionals');
+    }
 }
