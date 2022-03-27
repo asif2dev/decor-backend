@@ -8,6 +8,7 @@ use App\Modules\Images\Providers\Local;
 use App\Modules\LoginVerification\LoginVerificationInterface;
 use App\Modules\LoginVerification\SmsProviderFactory;
 use App\Modules\SearchEngine\DatabaseSearchEngine;
+use App\Modules\SearchEngine\MeilisearchSearchEngine;
 use App\Modules\SearchEngine\SearchEngineInterface;
 use Illuminate\Support\ServiceProvider;
 
@@ -50,6 +51,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $this->app->make(SearchEngineInterface::class)->configure();
     }
 }

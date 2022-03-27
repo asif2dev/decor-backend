@@ -23,4 +23,9 @@ class DatabaseSearchEngine implements SearchEngineInterface
     {
         return $this->professionalService->getTopRated();
     }
+
+    public function configure(): void
+    {
+        // TODO: Implement configure() method.
+    }
 }

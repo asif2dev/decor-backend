@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
 
 class Professional extends Model
 {
@@ -54,6 +55,11 @@ class Professional extends Model
     public function toSearchableArray(): array
     {
         return ProfessionalNormalizer::toSearchableArray($this);
+    }
+
+    public function searchableAs(): string
+    {
+        return 'professional_index_uid';
     }
 
     public function getScoutKey(): string

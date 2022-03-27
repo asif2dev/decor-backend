@@ -12,4 +12,6 @@ interface SearchEngineInterface
     public function search(SearchForm $searchForm): Collection;
 
     public function getTopRated(): Collection;
+
+    public function configure(): void;
 }
