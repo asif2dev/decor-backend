@@ -31,6 +31,7 @@ Route::get('sitemap', [\App\Http\Controllers\SitemapController::class, 'get']);
 Route::get('env', [EnvController::class, 'get']);
 
 Route::get('categories', [CategoriesController::class, 'getAll']);
+Route::get('inspire', [ProjectController::class, 'inspire']);
 
 Route::group(
     ['prefix' => 'auth'],

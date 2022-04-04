@@ -104,4 +104,13 @@ class ProjectController extends Controller
 
         return new JsonResponse([], 200);
     }
+
+    public function inspire(Request $request): ProjectsResourceCollection
+    {
+        $tag = $request->get('tag');
+
+        $result = $this->projectService->inspire($tag);
+
+        return new ProjectsResourceCollection($result);
+    }
 }

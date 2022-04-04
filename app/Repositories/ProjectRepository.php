@@ -63,4 +63,14 @@ class ProjectRepository extends BaseRepository
     {
         Project::where('id', $project->id)->delete();
     }
+
+    public function getProjectsHasTag(?string $tag): Collection
+    {
+        return (new Project())->newQuery()
+            ->whereHas(
+                'tags',
+                fn($query) => $query->where('name', 'like', '%' . $tag . '%')
+            )
+            ->get();
+    }
 }

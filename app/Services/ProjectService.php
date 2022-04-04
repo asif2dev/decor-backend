@@ -93,4 +93,9 @@ class ProjectService
 
         $this->projectRepository->delete($project);
     }
+
+    public function inspire(?string $tag): Collection
+    {
+        return $this->projectRepository->getProjectsHasTag($tag);
+    }
 }
