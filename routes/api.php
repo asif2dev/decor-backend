@@ -26,6 +26,10 @@ Route::get('/', function () {
     return ['apiVersion' => '1.0.0', 'isLogged' => request()->user() !== null];
 });
 
+Route::get('scrap', function () {
+    dd((new \App\Modules\Scraper\MacknMall())->get());
+});
+
 Route::get('sitemap', [\App\Http\Controllers\SitemapController::class, 'get']);
 
 Route::get('env', [EnvController::class, 'get']);

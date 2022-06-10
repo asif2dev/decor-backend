@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.0",
+        "ext-dom": "*",
         "clicksend/clicksend-php": "^5.0",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
@@ -14,6 +15,7 @@
         "laravel/sanctum": "^2.11",
         "laravel/scout": "^9.4",
         "laravel/tinker": "^2.5",
+        "league/csv": "^9.8",
         "meilisearch/meilisearch-php": "^0.22.0",
         "propaganistas/laravel-phone": "^4.3",
         "spatie/laravel-sitemap": "^6.1",

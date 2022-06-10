@@ -39,6 +39,11 @@ class UserController extends Controller
 
     public function getLoggedInUser(Request $request): UserResource
     {
+        $user = $request->user();
+        if (! $user) {
+            abort(404);
+        }
+
         return new UserResource($request->user());
     }
 

@@ -27,6 +27,7 @@ services:
             - mysql
             - redis
             - meilisearch
+
     mysql:
         container_name: decor.mysql
         image: 'mysql:8.0'
@@ -42,10 +43,7 @@ services:
             - 'sailmysql:/var/lib/mysql'
         networks:
             - sail
-        healthcheck:
-            test: [ "CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}" ]
-            retries: 3
-            timeout: 5s
+
     redis:
         container_name: decor.redis
         image: 'redis:alpine'
@@ -55,10 +53,7 @@ services:
             - 'sailredis:/data'
         networks:
             - sail
-        healthcheck:
-            test: [ "CMD", "redis-cli", "ping" ]
-            retries: 3
-            timeout: 5s
+
     meilisearch:
         container_name: decor.meilisearch
         image: 'getmeili/meilisearch:latest'
@@ -72,10 +67,7 @@ services:
             - sail
         environment:
             MEILI_MASTER_KEY: Some-master-key-123
-        healthcheck:
-            test: [ "CMD", "wget", "--no-verbose", "--spider",  "http://localhost:7700/health" ]
-            retries: 3
-            timeout: 5s
+
     mailhog:
         container_name: decor.mailhog
         image: 'mailhog/mailhog:latest'
