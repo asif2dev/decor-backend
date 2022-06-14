@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Auth\AuthService;
 use App\Http\Forms\SearchForm;
 use App\Http\Requests\CreateProfessionalRequest;
 use App\Http\Resources\ProfessionalProfileResource;
@@ -18,6 +19,7 @@ class ProfessionalController extends Controller
 {
     public function __construct(
         private ProfessionalService $professionalService,
+        private AuthService $authService,
         private SearchEngineInterface $searchEngine
     ) {
     }
@@ -55,7 +57,8 @@ class ProfessionalController extends Controller
         }
 
 
-        $user = $request->user();
+        $user = $this->authService->register($request->get('phone1'));
+
         $logo = $request->file('logo');
 
         return new ProfessionalResource(

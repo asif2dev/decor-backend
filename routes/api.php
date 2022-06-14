@@ -68,6 +68,8 @@ Route::get('/tags', [TagController::class, 'getTags']);
 Route::get('/projects/{uid}/similar', [ProjectController::class, 'getSimilar']);
 Route::get('/projects/{uid}', [ProjectController::class, 'get']);
 
+Route::post('/professionals', [ProfessionalController::class, 'store']);
+
 Route::group(
     ['prefix' => 'professionals', 'middleware' => 'auth:sanctum'],
     static function () {
@@ -76,6 +78,5 @@ Route::group(
         Route::post('/{professionalUid}/projects', [ProjectController::class, 'store']);
         Route::post('/{professionalUid}/reviews', [ProfessionalReviewController::class, 'writeReview']);
         Route::post('/{professionalUid}', [ProfessionalController::class, 'update']);
-        Route::post('/', [ProfessionalController::class, 'store']);
     }
 );

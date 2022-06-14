@@ -5,6 +5,7 @@ COPY docker/000-default.conf /etc/apache2/sites-available/000-default.conf
 RUN cat /etc/apache2/sites-available/000-default.conf
 RUN cat /etc/apache2/ports.conf
 
+RUN a2enmod headers
 RUN a2enmod rewrite
 RUN service apache2 restart
 
