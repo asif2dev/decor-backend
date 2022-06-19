@@ -19,11 +19,11 @@ class ProjectRepository extends BaseRepository
         return Project::create($data);
     }
 
-    public function addProjectImages(Project $project, array $images): Project
+    public function addProjectImages(Project $project, Professional $professional, array $images): Project
     {
         $images = array_map(
-            function ($image) {
-                return ['path' => $image];
+            function ($image) use ($professional) {
+                return ['path' => $image, 'professional_id' => $professional->id];
             },
             $images
         );

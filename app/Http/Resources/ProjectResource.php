@@ -29,12 +29,8 @@ class ProjectResource extends JsonResource
         ];
 
         if ($this->loadProfessional) {
-            logger()->info('professional id: ', ['prof is: ' => $this->resource->professional]);
-
             $result['professional'] = new ProfessionalResource($this->resource->professional);
         }
-
-        logger()->info('professional: ' , ['prof' => $result]);
 
         return $result;
     }

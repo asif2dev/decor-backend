@@ -1,12 +1,16 @@
 <?php
 
+use App\Http\Controllers\AppController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\DesignTypeController;
 use App\Http\Controllers\EnvController;
 use App\Http\Controllers\ProfessionalController;
 use App\Http\Controllers\ProfessionalReviewController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\ProjectImageController;
+use App\Http\Controllers\SpaceController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -35,7 +39,8 @@ Route::get('sitemap', [\App\Http\Controllers\SitemapController::class, 'get']);
 Route::get('env', [EnvController::class, 'get']);
 
 Route::get('categories', [CategoriesController::class, 'getAll']);
-Route::get('inspire', [ProjectController::class, 'inspire']);
+Route::get('inspire', [ProjectImageController::class, 'inspire']);
+Route::get('project-spaces', [SpaceController::class, 'get']);
 
 Route::group(
     ['prefix' => 'auth'],
@@ -63,8 +68,12 @@ Route::get('/professionals/{professionalUid}/projects', [ProjectController::clas
 Route::get('professionals/{professionalUid}/reviews', [ProfessionalReviewController::class, 'getReviews']);
 Route::get('professionals/{professionalUid}', [ProfessionalController::class, 'get']);
 
+Route::get('app-config', [AppController::class, 'getAppConfig']);
+
 Route::get('/projects/latest', [ProjectController::class, 'getLatestProjects']);
+Route::get('/spaces/{spaces}/images', [ProjectImageController::class, 'getImagesBySpace']);
 Route::get('/tags', [TagController::class, 'getTags']);
+Route::get('/design-types', [DesignTypeController::class, 'getDesignTypes']);
 Route::get('/projects/{uid}/similar', [ProjectController::class, 'getSimilar']);
 Route::get('/projects/{uid}', [ProjectController::class, 'get']);
 
@@ -75,6 +84,7 @@ Route::group(
     static function () {
         Route::post('/{professionalUid}/projects/{id}/update', [ProjectController::class, 'update']);
         Route::delete('/{professionalUid}/projects/{id}/delete', [ProjectController::class, 'delete']);
+        Route::post('/{professionalUid}/projects/{id}/update-images', [ProjectController::class, 'updateImages']);
         Route::post('/{professionalUid}/projects', [ProjectController::class, 'store']);
         Route::post('/{professionalUid}/reviews', [ProfessionalReviewController::class, 'writeReview']);
         Route::post('/{professionalUid}', [ProfessionalController::class, 'update']);

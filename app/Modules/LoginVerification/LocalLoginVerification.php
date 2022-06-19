@@ -22,7 +22,6 @@ class LocalLoginVerification implements LoginVerificationInterface
 
     public function verify(string $phone, string $code): bool
     {
-        logger()->info('logging using: ', ['phone' => $phone, 'code' => $code]);
         return (new User())->newQuery()->where('phone', $phone)
             ->where('verification_code', $code)
             ->exists();

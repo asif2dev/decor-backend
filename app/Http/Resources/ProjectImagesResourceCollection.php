@@ -18,21 +18,20 @@ class ProjectImagesResourceCollection extends ResourceCollection
      */
     public function toArray($request): array|Arrayable
     {
-        if ($this->resource->count() === 0) {
-            return [
-                [
-                    'src' => 'https://storage.googleapis.com/egar_market_assets/no-photo.png',
-                    'thumbnail' => 'https://storage.googleapis.com/egar_market_assets/no-photo.png',
-                ]
-            ];
-        }
-
         return $this->resource->map(
             function (ProjectImage $image) {
                 return [
                     'id' => $image->id,
                     'src' => new ProjectImagePath($image->path),
-                    'thumbnail' => new ProjectThumb($image->path)
+                    'thumbnail' => new ProjectThumb($image->path),
+                    'title' => $image->title,
+                    'description' => $image->description,
+                    'palette' => $image->palette,
+                    'space_id' => $image->space_id,
+                    'design_type_id' =>$image->design_type_id,
+                    'space' => new SpaceResource($image->space),
+                    'designType' => new DesignTypeResource($image->designType),
+                    'professional' => new ProfessionalResource($image->professional)
                 ];
             }
         );

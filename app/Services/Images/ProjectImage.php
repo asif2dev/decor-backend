@@ -16,10 +16,6 @@ class ProjectImage implements ImageHandlerInterface
     {
         $path = Storage::putFile( self::PATH, $file);
 
-        logger()->info('ProjectImage: ', [
-            'path' => $path
-        ]);
-
         return Storage::url($path);
     }
 

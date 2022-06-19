@@ -2,6 +2,7 @@
 
 namespace App\Modules\SearchEngine;
 
+use App\Http\Forms\InspireSearchForm;
 use App\Http\Forms\SearchForm;
 use App\Models\Professional;
 use Illuminate\Support\Collection;
@@ -45,5 +46,15 @@ class MeilisearchSearchEngine implements SearchEngineInterface
             ->orderBy('reviewsCount', 'desc')
             ->orderBy('projectsCount', 'desc')
             ->get();
+    }
+
+    public function getImagesBySpace(string $space, array $query = []): Collection
+    {
+        return collect();
+    }
+
+    public function inspire(InspireSearchForm $searchForm): Collection
+    {
+        return collect();
     }
 }

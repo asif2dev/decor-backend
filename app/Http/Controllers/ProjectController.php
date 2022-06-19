@@ -105,6 +105,17 @@ class ProjectController extends Controller
         return new JsonResponse([], 200);
     }
 
+    public function updateImages(Request $request, string $professionalUid, string $projectId)
+    {
+        $project = $this->projectService->getById($projectId);
+        $professional = $this->professionalService->getByUid($professionalUid);
+        if ($this->professionalService->ownProject($professional, $project) === false) {
+            abort(403);
+        }
+
+        $this->professionalService->updateImages($project, $request->all());
+    }
+
     public function inspire(Request $request): ProjectsResourceCollection
     {
         $tag = $request->get('tag');

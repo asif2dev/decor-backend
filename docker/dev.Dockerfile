@@ -5,6 +5,7 @@ COPY docker/000-default.conf /etc/apache2/sites-available/000-default.conf
 RUN cat /etc/apache2/sites-available/000-default.conf
 RUN cat /etc/apache2/ports.conf
 
+RUN a2enmod headers
 RUN a2enmod rewrite
 RUN service apache2 restart
 
@@ -41,8 +42,8 @@ RUN echo "error_reporting=E_ALL" > /usr/local/etc/php/conf.d/php.ini && \
     echo "upload_max_filesize=64M" >> /usr/local/etc/php/conf.d/php.ini
 
 RUN { \
-        echo 'opcache.enable=1'; \
-        echo 'opcache.enable_cli=1'; \
+        echo 'opcache.enable=0'; \
+        echo 'opcache.enable_cli=0'; \
         echo 'opcache.validate_timestamps=\${OPCACHE_VALIDATE_TIMESTAMPS}'; \
         echo 'opcache.revalidate_freq=0'; \
         echo 'opcache.memory_consumption=128'; \

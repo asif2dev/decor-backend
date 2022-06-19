@@ -38,7 +38,7 @@ class ProjectService
             $paths[] = $this->projectImage->uploadImage($image);
         }
 
-        $this->projectRepository->addProjectImages($project, $paths);
+        $this->projectRepository->addProjectImages($project, $professional, $paths);
 
         return $project;
     }
@@ -59,7 +59,7 @@ class ProjectService
         array $images
     ): void {
         $deletedImages = $project->images()
-            ->whereNotIn('id', $data['currentImages'])
+            ->whereNotIn('id', $data['currentImages'] ?? [])
             ->get();
 
         foreach ($deletedImages as $image) {

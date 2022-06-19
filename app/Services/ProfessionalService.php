@@ -6,7 +6,9 @@ namespace App\Services;
 
 use App\Http\Forms\SearchForm;
 use App\Models\Professional;
+use App\Models\Project;
 use App\Models\User;
+use App\Modules\Images\ProjectImage;
 use App\Repositories\ProfessionalRepository;
 use App\Services\Images\ImageHandlerInterface;
 use Illuminate\Http\UploadedFile;
@@ -79,5 +81,30 @@ class ProfessionalService
         }
 
         return $professional;
+    }
+
+    public function ownProject(?Professional $professional, ?Project $project): bool
+    {
+        if (!$professional || !$project) {
+            return false;
+        }
+
+        return (bool) $professional->projects()->where('id', $project->id)->first();
+    }
+
+    public function updateImages(Project $project, array $imagesData): bool
+    {
+        foreach ($imagesData as $image) {
+            \App\Models\ProjectImage::query()->where('id', $image['id'])
+                ->update([
+                    'title' => $image['title'],
+                    'space_id' => empty($image['space_id']) ? null : $image['space_id'],
+                    'design_type_id' => empty($image['design_type_id']) ? null : $image['design_type_id'],
+                    'description' => $image['description'],
+                    'palette' => $image['palette'],
+                ]);
+        }
+
+        return true;
     }
 }

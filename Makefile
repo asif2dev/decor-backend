@@ -7,6 +7,11 @@ enter:
 migrate-fresh:
 	docker-compose run --rm --entrypoint "php artisan migrate:fresh --seed" app
 
+reset:
+	$(MAKE) migrate-fresh
+	rm -rf public/uploads/**/*
+
+
 migrate:
 	docker-compose run --rm --entrypoint "php artisan migrate" app
 

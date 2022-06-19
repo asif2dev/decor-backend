@@ -4,8 +4,12 @@
 namespace App\Modules\SearchEngine;
 
 
+use App\Http\Forms\InspireSearchForm;
 use App\Http\Forms\SearchForm;
+use App\Models\ProjectImage;
+use App\Models\Space;
 use App\Services\ProfessionalService;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
 class DatabaseSearchEngine implements SearchEngineInterface
@@ -27,5 +31,41 @@ class DatabaseSearchEngine implements SearchEngineInterface
     public function configure(): void
     {
         // TODO: Implement configure() method.
+    }
+
+    public function getImagesBySpace(string $space, array $query = []): Collection
+    {
+        /** @var Space $space */
+        $space = Space::query()
+            ->where('slug', $space)
+            ->first();
+
+        if (!$space) {
+            return collect();
+        }
+
+        return $space->projectImages()->with(['space', 'professional', 'designType'])->get();
+    }
+
+    public function inspire(InspireSearchForm $searchForm): Collection
+    {
+        $result = ProjectImage::query();
+        $result = $result->when($searchForm->getSpace(), function (Builder $q) use ($searchForm) {
+            $q->whereHas('space', function (Builder $builder) use ($searchForm) {
+                $builder->where('spaces.slug', $searchForm->getSpace());
+            });
+        });
+
+        $result = $result->when($searchForm->getDesignType(), function (Builder $q) use ($searchForm) {
+            $q->whereHas('designType', function (Builder $builder) use ($searchForm) {
+                $builder->where('design_types.slug', $searchForm->getDesignType());
+            });
+        });
+
+        $result = $result->when($searchForm->getColor(), function (Builder $q) use ($searchForm) {
+            $q->where('palette', 'like', "%{$searchForm->getColor()}%");
+        });
+
+        return $result->get();
     }
 }
