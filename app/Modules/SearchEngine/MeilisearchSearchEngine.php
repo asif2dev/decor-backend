@@ -48,7 +48,7 @@ class MeilisearchSearchEngine implements SearchEngineInterface
             ->get();
     }
 
-    public function getImagesBySpace(string $space, array $query = []): Collection
+    public function getImagesBySpace(string $space, int $limit = 4): Collection
     {
         return collect();
     }

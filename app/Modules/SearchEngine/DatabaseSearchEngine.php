@@ -33,7 +33,7 @@ class DatabaseSearchEngine implements SearchEngineInterface
         // TODO: Implement configure() method.
     }
 
-    public function getImagesBySpace(string $space, array $query = []): Collection
+    public function getImagesBySpace(string $space, int $limit = 4): Collection
     {
         /** @var Space $space */
         $space = Space::query()
@@ -44,7 +44,11 @@ class DatabaseSearchEngine implements SearchEngineInterface
             return collect();
         }
 
-        return $space->projectImages()->with(['space', 'professional', 'designType'])->get();
+        return $space->projectImages()
+            ->with(['space', 'professional', 'designType'])
+            ->skip(0)
+            ->take($limit)
+            ->get();
     }
 
     public function inspire(InspireSearchForm $searchForm): Collection

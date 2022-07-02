@@ -16,7 +16,7 @@ interface SearchEngineInterface
 
     public function configure(): void;
 
-    public function getImagesBySpace(string $space, array $query= []);
+    public function getImagesBySpace(string $space, int $limit = 4);
 
     public function inspire(InspireSearchForm $searchForm): Collection;
 }

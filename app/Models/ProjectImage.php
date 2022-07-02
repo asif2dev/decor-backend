@@ -13,6 +13,7 @@ class ProjectImage extends Model
     protected $fillable = [
         'path',
         'title',
+        'slug',
         'description',
         'palette',
         'space_id',

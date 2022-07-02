@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Modules\Images\ProjectImage;
 use App\Repositories\ProfessionalRepository;
 use App\Services\Images\ImageHandlerInterface;
+use App\Support\Str;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 
@@ -98,6 +99,7 @@ class ProfessionalService
             \App\Models\ProjectImage::query()->where('id', $image['id'])
                 ->update([
                     'title' => $image['title'],
+                    'slug' => Str::arSlug($image['title']) . '-' . $image['id'],
                     'space_id' => empty($image['space_id']) ? null : $image['space_id'],
                     'design_type_id' => empty($image['design_type_id']) ? null : $image['design_type_id'],
                     'description' => $image['description'],

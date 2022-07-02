@@ -41,6 +41,7 @@ Route::get('env', [EnvController::class, 'get']);
 Route::get('categories', [CategoriesController::class, 'getAll']);
 Route::get('inspire', [ProjectImageController::class, 'inspire']);
 Route::get('project-spaces', [SpaceController::class, 'get']);
+Route::get('images/{slug}', [ProjectImageController::class, 'getImagesBySlug']);
 
 Route::group(
     ['prefix' => 'auth'],

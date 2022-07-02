@@ -24,7 +24,7 @@ class ProjectResource extends JsonResource
             'id' => $this->resource->id,
             'title' => $this->resource->title,
             'description' => $this->resource->description,
-            'images' => new ProjectImagesResourceCollection($this->resource->images),
+            'images' => new ProjectImageResourceCollection($this->resource->images),
             'tags' => $this->getTags()
         ];
 

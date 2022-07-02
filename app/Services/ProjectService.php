@@ -77,7 +77,7 @@ class ProjectService
             foreach ($images as $image) {
                 $paths[] = $this->projectImage->uploadImage($image);
             }
-            $this->projectRepository->addProjectImages($project, $paths);
+            $this->projectRepository->addProjectImages($project, $project->professional, $paths);
         }
 
         $this->projectRepository->update($project, $data);
