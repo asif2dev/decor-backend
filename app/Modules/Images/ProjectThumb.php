@@ -4,6 +4,6 @@ namespace App\Modules\Images;
 
 class ProjectThumb extends Image
 {
-    protected int $width = 450;
-    protected int $height = 200;
+    protected int $width = 400;
+    protected int $height = 400;
 }
