@@ -13,6 +13,7 @@ use App\Services\ProfessionalService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Laravel\Sanctum\PersonalAccessToken;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProfessionalController extends Controller
@@ -56,8 +57,12 @@ class ProfessionalController extends Controller
             );
         }
 
-
-        $user = $this->authService->register($request->get('phone1'));
+        if ($request->bearerToken()) {
+            $token = PersonalAccessToken::findToken($request->bearerToken());
+            $user = $token->tokenable;
+        } else {
+            $user = $this->authService->register($request->get('phone1'));
+        }
 
         $logo = $request->file('logo');
 

@@ -47,11 +47,20 @@ class UserController extends Controller
         return new UserResource($request->user());
     }
 
-    public function updateUser(Request $request): UserResource
+    public function updateUser(Request $request): JsonResponse|UserResource
     {
-        $this->userRepository->updateUser($request->user(), $request->all());
+        try {
+            if ($this->userRepository->getUserByEmail($request->get('email')) !== null) {
+                return \response()->json(['message' => 'البريد اللإلكتروني مستخدم من قبل'], 400);
+            }
 
-        return new UserResource($request->user());
+            $this->userRepository->updateUser($request->user(), $request->all());
+
+            return new UserResource($request->user());
+        } catch (\Throwable $exception) {
+            logger()->info(get_class($exception));
+            return \response()->json(['message' => 'لم يتم تحديث البيانات'], 500);
+        }
     }
 
     public function logout(Request $request): JsonResponse

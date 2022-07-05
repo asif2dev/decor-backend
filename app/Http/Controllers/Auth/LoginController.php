@@ -29,7 +29,7 @@ class LoginController extends Controller
 
         $phone = $request->get('phone');
         if (PhoneNumberHelper::isValid($phone) === false) {
-            abort(422);
+            return response()->json(['message' => 'رقم الهاتف غير صحيح'], 422);
         }
 
         $phone = PhoneNumberHelper::getFormattedPhone($phone);
