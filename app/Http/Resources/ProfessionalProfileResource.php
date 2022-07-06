@@ -2,7 +2,10 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Project;
 use App\Modules\Images\ProfessionalLogo;
+use App\Modules\Images\ProjectImage as ProjectImagePath;
+use App\Modules\Images\ProjectThumb;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Collection;
@@ -40,10 +43,27 @@ class ProfessionalProfileResource extends JsonResource
     {
         $projects = collect();
         foreach ($this->resource->projects as $project) {
-            $projects->push(new ProjectResource($project, false));
+            $projects->push($this->getProject($project));
         }
 
         return $projects;
+    }
+
+    private function getProject(Project $project): array
+    {
+        $image = $project->images->first();
+
+        return [
+            'id' => $project->id,
+            'title' => $project->title,
+            'description' => $project->description,
+            'images' => [
+                [
+                    'src' => new ProjectImagePath($image->path),
+                    'thumbnail' => new ProjectThumb($image->path)
+                ]
+            ]
+        ];
     }
 
     private function parseSocial(?array $social = null): array
