@@ -45,6 +45,7 @@ class DatabaseSearchEngine implements SearchEngineInterface
         }
 
         return $space->projectImages()
+            ->inRandomOrder()
             ->with(['space', 'professional', 'designType'])
             ->skip(0)
             ->take($limit)
@@ -53,7 +54,7 @@ class DatabaseSearchEngine implements SearchEngineInterface
 
     public function inspire(InspireSearchForm $searchForm): Collection
     {
-        $result = ProjectImage::query();
+        $result = ProjectImage::query()->inRandomOrder();
         $result = $result->when($searchForm->getSpace(), function (Builder $q) use ($searchForm) {
             $q->whereHas('space', function (Builder $builder) use ($searchForm) {
                 $builder->where('spaces.slug', $searchForm->getSpace());
