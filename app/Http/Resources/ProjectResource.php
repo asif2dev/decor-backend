@@ -2,13 +2,10 @@
 
 namespace App\Http\Resources;
 
-use App\Models\Professional;
-use App\Modules\Images\ProfessionalLogo;
 use App\Modules\Images\ProjectImage as ProjectImagePath;
 use App\Modules\Images\ProjectThumb;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Collection;
 
 class ProjectResource extends JsonResource
@@ -50,6 +47,13 @@ class ProjectResource extends JsonResource
         $result = [];
         foreach ($images as $image) {
             $result[] = [
+                'id' =>  $image->id,
+                'title' =>  $image->title,
+                'space_id' =>  $image->space_id,
+                'design_type_id' =>  $image->design_type_id,
+                'palette' =>  $image->palette,
+                'description' =>  $image->description,
+                'src' => new ProjectImagePath($image->path),
                 'slug' => $image->slug,
                 'thumbnail' => new ProjectThumb($image->path)
             ];
