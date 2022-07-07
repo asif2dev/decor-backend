@@ -48,7 +48,7 @@ class ProfessionalRepository extends BaseRepository
                                 professionals.id
                         ) as pr on pr.id = professionals.id
                         order by projectsCount desc, avgReviews desc
-                        limit 0, 5'
+                        limit 0, 3'
         );
 
         $ids = collect($result)->pluck('id')->flatten()->toArray();
