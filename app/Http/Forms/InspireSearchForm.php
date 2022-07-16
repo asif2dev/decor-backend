@@ -24,6 +24,16 @@ class InspireSearchForm implements \JsonSerializable
         return $this->requestParams['color'] ?? null;
     }
 
+    public function getStart(): int
+    {
+        return $this->requestParams['start'] ?? 0;
+    }
+
+    public function getPerPage(): int
+    {
+        return $this->requestParams['perPage'] ?? 15;
+    }
+
     public function jsonSerialize()
     {
         return $this->requestParams;

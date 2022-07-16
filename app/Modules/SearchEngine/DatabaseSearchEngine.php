@@ -71,6 +71,8 @@ class DatabaseSearchEngine implements SearchEngineInterface
             $q->where('palette', 'like', "%{$searchForm->getColor()}%");
         });
 
+        $result = $result->skip($searchForm->getStart())->take($searchForm->getPerPage());
+
         return $result->get();
     }
 }
