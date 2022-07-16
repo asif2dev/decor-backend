@@ -54,7 +54,7 @@ class DatabaseSearchEngine implements SearchEngineInterface
 
     public function inspire(InspireSearchForm $searchForm): Collection
     {
-        $result = ProjectImage::query()->inRandomOrder();
+        $result = ProjectImage::query();
         $result = $result->when($searchForm->getSpace(), function (Builder $q) use ($searchForm) {
             $q->whereHas('space', function (Builder $builder) use ($searchForm) {
                 $builder->where('spaces.slug', $searchForm->getSpace());
@@ -73,6 +73,6 @@ class DatabaseSearchEngine implements SearchEngineInterface
 
         $result = $result->skip($searchForm->getStart())->take($searchForm->getPerPage());
 
-        return $result->get();
+        return $result->get()->shuffle();
     }
 }
