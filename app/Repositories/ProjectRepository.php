@@ -6,6 +6,7 @@ namespace App\Repositories;
 
 use App\Models\Professional;
 use App\Models\Project;
+use App\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
@@ -22,13 +23,24 @@ class ProjectRepository extends BaseRepository
     public function addProjectImages(Project $project, Professional $professional, array $images): Project
     {
         $images = array_map(
-            function ($image) use ($professional) {
-                return ['path' => $image, 'professional_id' => $professional->id];
+            function ($image) use ($professional, $project) {
+                return [
+                    'path' => $image,
+                    'title' => $project->title,
+                    'description' => $project->description,
+                    'professional_id' => $professional->id
+                ];
             },
             $images
         );
 
         $project->images()->createMany($images);
+
+        // update images slug
+        foreach ($project->images as $image) {
+            $slug = Str::arSlug($project->title) . '-' . $image->id;
+            $image->update(['slug' => $slug]);
+        }
 
         return $project;
     }
