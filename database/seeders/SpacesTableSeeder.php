@@ -35,9 +35,7 @@ class SpacesTableSeeder extends Seeder
             'مطعم',
             'طبي',
             'الحدائق والساحات الخلفية',
-            'حمام سباحة',
-            'كلاسيك',
-            'نيو كلاسيك'
+            'حمام سباحة'
         ];
 
         foreach ($spaces as $space) {

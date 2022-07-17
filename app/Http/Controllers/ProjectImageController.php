@@ -26,7 +26,7 @@ class ProjectImageController extends Controller
             $result->push([
                 'slug' => $space,
                 'space' => str_replace('-', ' ', $space),
-                'images' => new MiniProjectImagesResourceCollection($this->searchEngine->getImagesBySpace($space))
+                'images' => new MiniProjectImagesResourceCollection($this->searchEngine->getImagesBySpace($space, 6))
             ]);
         }
 

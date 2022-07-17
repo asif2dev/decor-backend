@@ -14,6 +14,7 @@ class MiniProjectImagesResourceCollection extends ResourceCollection
         return $this->resource->map(function (ProjectImage $projectImage) {
             return [
                 'slug' => $projectImage->slug,
+                'title' => $projectImage->title,
                 'thumbnail' => new ProjectThumb($projectImage->path),
                 'space_id' => $projectImage->space_id,
                 'professional' => [
