@@ -85,11 +85,7 @@ class ProjectService
 
     public function delete(Project $project): void
     {
-//        foreach ($project->images as $image) {
-//            /** @var ProjectImage $image*/
-//            $this->projectImage->removeImage($image->path);
-//        }
-//        $project->images()->delete();
+        $project->images()->delete();
 
         $this->projectRepository->delete($project);
     }
