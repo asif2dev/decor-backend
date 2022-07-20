@@ -32,7 +32,7 @@ class UserResource extends JsonResource
 
     private function getFavorites(User $user): array
     {
-        return $user->favorites
+        return $user->favoriteProfessionals
             ->map(fn (Professional $professional) => $professional->uid)
             ->flatten()
             ->toArray();

@@ -6,6 +6,7 @@ use App\Http\Resources\ProfessionalResourceCollection;
 use App\Http\Resources\UserResource;
 use App\Repositories\UserRepository;
 use App\Services\ProfessionalService;
+use App\Services\ProjectImageService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -14,18 +15,31 @@ class UserController extends Controller
 {
     public function __construct(
         private UserRepository $userRepository,
-        private ProfessionalService $professionalService
+        private ProfessionalService $professionalService,
+        private ProjectImageService $projectImageService
     ) {
     }
 
-    public function toggleFavorites(Request $request, string $professionalUid): JsonResponse
+    public function toggleFavoriteProfessional(Request $request, string $professionalUid): JsonResponse
     {
         $professional = $this->professionalService->getByUid($professionalUid);
         if (!$professional) {
             return new JsonResponse();
         }
 
-        $this->userRepository->toggleFavorites($request->user(), $professional);
+        $this->userRepository->toggleFavoriteProfessional($request->user(), $professional);
+
+        return new JsonResponse();
+    }
+
+    public function toggleFavoriteProjectImage(Request $request, string $slug): JsonResponse
+    {
+        $projectImage = $this->projectImageService->getImageBySlug($slug);
+        if (!$projectImage) {
+            return new JsonResponse();
+        }
+
+        $this->userRepository->toggleFavoriteProjectImage($request->user(), $projectImage);
 
         return new JsonResponse();
     }

@@ -10,6 +10,7 @@ use App\Http\Controllers\ProfessionalController;
 use App\Http\Controllers\ProfessionalReviewController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ProjectImageController;
+use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\SpaceController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
@@ -34,9 +35,15 @@ Route::get('scrap', function () {
     dd((new \App\Modules\Scraper\MacknMall())->get());
 });
 
-Route::get('sitemap', [\App\Http\Controllers\SitemapController::class, 'get']);
+Route::get('sitemap', [SitemapController::class, 'get']);
 
-Route::get('env', [EnvController::class, 'get']);
+Route::group(
+    ['middleware' => 'auth:sanctum'],
+    static function () {
+        Route::get('images/{slug}/toggleFavorite', [UserController::class, 'toggleFavoriteProjectImage']);
+    }
+);
+
 
 Route::get('categories', [CategoriesController::class, 'getAll']);
 Route::get('inspire', [ProjectImageController::class, 'inspire']);
@@ -57,7 +64,7 @@ Route::group(
         Route::post('/', [UserController::class, 'updateUser']);
         Route::get('/me', [UserController::class, 'getLoggedInUser']);
         Route::get('/logout', [UserController::class, 'logout']);
-        Route::post('/toggleFavorite/{professionalUid}', [UserController::class, 'toggleFavorites']);
+        Route::post('/toggleFavorite/{professionalUid}', [UserController::class, 'toggleFavoriteProfessional']);
         Route::get('/favorites', [UserController::class, 'getFavorites']);
     }
 );

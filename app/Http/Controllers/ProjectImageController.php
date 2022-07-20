@@ -8,13 +8,16 @@ use App\Http\Resources\ProjectImageResource;
 use App\Http\Resources\ProjectImageResourceCollection;
 use App\Models\ProjectImage;
 use App\Modules\SearchEngine\SearchEngineInterface;
+use App\Services\ProjectImageService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ProjectImageController extends Controller
 {
-    public function __construct(private SearchEngineInterface $searchEngine)
-    {
+    public function __construct(
+        private SearchEngineInterface $searchEngine,
+        private ProjectImageService $projectImageService
+    ) {
     }
 
     public function getImagesBySpace(string $spaces): JsonResponse
@@ -35,7 +38,7 @@ class ProjectImageController extends Controller
 
     public function getImagesBySlug(string $slug): ProjectImageResource
     {
-        $image = ProjectImage::query()->where('slug', $slug)->first();
+        $image = $this->projectImageService->getImageBySlug($slug);
         if (!$image) {
             abort(404);
         }

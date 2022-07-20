@@ -2,6 +2,7 @@
 namespace App\Repositories;
 
 use App\Models\Professional;
+use App\Models\ProjectImage;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -32,13 +33,23 @@ class UserRepository extends BaseRepository
         return $user->update($data);
     }
 
-    public function toggleFavorites(User $user, Professional $professional): void
+    public function toggleFavoriteProfessional(User $user, Professional $professional): void
     {
-        $exists = $user->favorites()->where('id', $professional->id)->exists();
+        $exists = $user->favoriteProfessionals()->where('id', $professional->id)->exists();
         if ($exists) {
-            $user->favorites()->detach($professional->id);
+            $user->favoriteProfessionals()->detach($professional->id);
         } else {
-            $user->favorites()->attach($professional->id);
+            $user->favoriteProfessionals()->attach($professional->id);
+        }
+    }
+
+    public function toggleFavoriteProjectImage(User $user, ProjectImage $projectImage): void
+    {
+        $exists = $user->favoriteProjectImages()->where('id', $projectImage->id)->exists();
+        if ($exists) {
+            $user->favoriteProjectImages()->detach($projectImage->id);
+        } else {
+            $user->favoriteProjectImages()->attach($projectImage->id);
         }
     }
 
