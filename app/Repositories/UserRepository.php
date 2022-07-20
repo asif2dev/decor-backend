@@ -53,8 +53,13 @@ class UserRepository extends BaseRepository
         }
     }
 
-    public function getFavorites(User $user): Collection
+    public function getFavoritesProfessionals(User $user): Collection
     {
-        return $user->favorites;
+        return $user->favoriteProfessionals()->get();
+    }
+
+    public function getFavoritesImages(User $user): Collection
+    {
+        return $user->favoriteProjectImages()->get();
     }
 }

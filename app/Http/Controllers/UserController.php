@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\MiniProjectImagesResourceCollection;
 use App\Http\Resources\ProfessionalResourceCollection;
 use App\Http\Resources\UserResource;
 use App\Repositories\UserRepository;
@@ -44,11 +45,18 @@ class UserController extends Controller
         return new JsonResponse();
     }
 
-    public function getFavorites(Request $request): ProfessionalResourceCollection
+    public function getFavoritesProfessionals(Request $request): ProfessionalResourceCollection
     {
-        $professionals = $this->userRepository->getFavorites($request->user());
+        $professionals = $this->userRepository->getFavoritesProfessionals($request->user());
 
         return new ProfessionalResourceCollection($professionals);
+    }
+
+    public function getFavoritesImages(Request $request): MiniProjectImagesResourceCollection
+    {
+        $images = $this->userRepository->getFavoritesImages($request->user());
+
+        return new MiniProjectImagesResourceCollection($images);
     }
 
     public function getLoggedInUser(Request $request): UserResource

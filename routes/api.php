@@ -65,7 +65,8 @@ Route::group(
         Route::get('/me', [UserController::class, 'getLoggedInUser']);
         Route::get('/logout', [UserController::class, 'logout']);
         Route::post('/toggleFavorite/{professionalUid}', [UserController::class, 'toggleFavoriteProfessional']);
-        Route::get('/favorites', [UserController::class, 'getFavorites']);
+        Route::get('/favorites-professionals', [UserController::class, 'getFavoritesProfessionals']);
+        Route::get('/favorites-images', [UserController::class, 'getFavoritesImages']);
     }
 );
 
