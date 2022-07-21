@@ -15,11 +15,8 @@ class MiniProjectImagesResourceCollection extends ResourceCollection
     public function toArray($request)
     {
         /** @var User $user */
-        $user = $this->getUser($request);
-        $images = collect();
-        if ($user) {
-            $images = $user->favoriteProjectImages()->get();
-        }
+        $user = $request->user();
+        $images = $user ? $user->favoriteProjectImages()->get() : collect();
 
         return $this->resource->map(function (ProjectImage $projectImage) use ($user, $images) {
             return [
@@ -45,19 +42,5 @@ class MiniProjectImagesResourceCollection extends ResourceCollection
 
         return $images->filter(fn(ProjectImage $image) => $image->id === $projectImage->id)
             ->count() !== 0;
-    }
-
-    private function getUser(Request $request): User|null
-    {
-        $user = $request->user();
-        if ($user) {
-            return $user;
-        }
-
-        if ($request->bearerToken() === null) {
-            return null;
-        }
-
-        return null;
     }
 }

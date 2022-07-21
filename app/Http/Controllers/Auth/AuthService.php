@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use InvalidArgumentException;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class AuthService
 {
@@ -67,5 +68,10 @@ class AuthService
     public function getUserByPhone(string $phone): ?User
     {
         return $this->userRepository->getUserByPhone($phone);
+    }
+
+    public function getUserFromToken(string $token): ?User
+    {
+        return PersonalAccessToken::findToken($token)?->tokenable;
     }
 }
