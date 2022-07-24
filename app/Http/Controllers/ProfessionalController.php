@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Auth\AuthService;
 use App\Http\Forms\SearchForm;
 use App\Http\Requests\CreateProfessionalRequest;
+use App\Http\Resources\MiniProfessionalResourceCollection;
 use App\Http\Resources\ProfessionalProfileResource;
 use App\Http\Resources\ProfessionalResource;
 use App\Http\Resources\ProfessionalResourceCollection;
@@ -78,11 +79,11 @@ class ProfessionalController extends Controller
         );
     }
 
-    public function search(Request $request): ProfessionalResourceCollection
+    public function search(Request $request): MiniProfessionalResourceCollection
     {
         $searchForm = new SearchForm($request->all());
 
-        return new ProfessionalResourceCollection(
+        return new MiniProfessionalResourceCollection(
             $this->searchEngine->search($searchForm)
         );
     }
