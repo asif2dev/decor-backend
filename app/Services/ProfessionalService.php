@@ -29,6 +29,7 @@ class ProfessionalService
     public function create(User $user, array $data, UploadedFile $logo): Professional
     {
         $data['uid'] = (int)(time() . rand(100, 999));
+        $data['slug'] = Str::arSlug($data['companyName']);
         $logoPath = $this->professionalImage->uploadImage($logo);
 
         $data['logo'] = $logoPath;
@@ -50,6 +51,11 @@ class ProfessionalService
     public function getByUid(int $uid): ?Professional
     {
         return $this->professionalRepository->getByUid($uid);
+    }
+
+    public function getBySlug(string $slug): ?Professional
+    {
+        return $this->professionalRepository->getBySlug($slug);
     }
 
     public function hasUser(Professional $professional, User $user): bool

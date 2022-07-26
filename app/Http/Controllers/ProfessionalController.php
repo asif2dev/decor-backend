@@ -26,9 +26,9 @@ class ProfessionalController extends Controller
     ) {
     }
 
-    public function get(string $professionalUid): ProfessionalProfileResource
+    public function get(string $professionalSlug): ProfessionalProfileResource
     {
-        $professional = $this->professionalService->getByUid($professionalUid);
+        $professional = $this->professionalService->getBySlug($professionalSlug);
         if ($professional === null) {
             abort(404);
         }

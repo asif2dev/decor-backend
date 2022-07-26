@@ -64,6 +64,11 @@ class ProfessionalRepository extends BaseRepository
         return Professional::whereUid($uid)->first();
     }
 
+    public function getBySlug(string $slug): ?Professional
+    {
+        return Professional::whereSlug($slug)->first();
+    }
+
     public function getAll(): Collection
     {
         return Professional::get();

@@ -18,6 +18,7 @@ class MiniProfessionalResourceCollection extends ResourceCollection
     {
         return $this->resource->map(fn(Professional $professional) => [
             'uid' => $professional->uid,
+            'slug' => $professional->slug,
             'companyName' => $professional->company_name,
             'about' => $professional->about,
             'logo' => new ProfessionalLogo($professional->logo),

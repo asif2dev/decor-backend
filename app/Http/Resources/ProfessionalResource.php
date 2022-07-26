@@ -23,6 +23,7 @@ class ProfessionalResource extends JsonResource
     {
         $result = [
             'uid' => $this->resource->uid,
+            'slug' => $this->resource->slug,
             'companyName' => $this->resource->company_name,
             'about' => $this->resource->about,
             'services' => $this->resource->services,

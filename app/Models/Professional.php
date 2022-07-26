@@ -16,6 +16,7 @@ class Professional extends Model
 
     protected $fillable = [
         'uid',
+        'slug',
         'company_name',
         'about',
         'services',

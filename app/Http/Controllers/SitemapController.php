@@ -17,7 +17,7 @@ class SitemapController extends Controller
 
         $urls = [];
         foreach ($professionals as $professional) {
-            $urls[] = '/professional/' . $professional->uid;
+            $urls[] = '/professional/' . $professional->slug;
         }
 
         foreach ($projects as $project) {

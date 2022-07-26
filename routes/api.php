@@ -75,7 +75,7 @@ Route::get('/category', [ProfessionalController::class, 'search']);
 Route::get('/professionals/top-rated', [ProfessionalController::class, 'getTopRated']);
 Route::get('/professionals/{professionalUid}/projects', [ProjectController::class, 'getProjects']);
 Route::get('professionals/{professionalUid}/reviews', [ProfessionalReviewController::class, 'getReviews']);
-Route::get('professionals/{professionalUid}', [ProfessionalController::class, 'get']);
+Route::get('professionals/{professionalSlug}', [ProfessionalController::class, 'get']);
 
 Route::get('app-config', [AppController::class, 'getAppConfig']);
 
