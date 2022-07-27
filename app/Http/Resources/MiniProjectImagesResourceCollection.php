@@ -27,6 +27,7 @@ class MiniProjectImagesResourceCollection extends ResourceCollection
                 'isFavorited' => $user && $this->isFavorited($images, $projectImage),
                 'professional' => [
                     'uid' => $projectImage->professional->uid,
+                    'slug' => $projectImage->professional->slug,
                     'companyName' => $projectImage->professional->company_name,
                     'logo' => new ProfessionalLogo($projectImage->professional->logo),
                 ]
