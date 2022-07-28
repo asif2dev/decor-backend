@@ -28,33 +28,27 @@ class ProfessionalService
         $this->professionalImage = $this->imageHandler->professional();
     }
 
-    /** @throws Throwable */
-    public function create(User $user, array $data, UploadedFile $logo): Professional
+    public function syncCategories(Professional $professional, array $categoriesIds): void
     {
-       try {
-           DB::beginTransaction();
+        $professional->categories()->sync($categoriesIds);
+    }
 
-           logger()->info('prof data', ['data' => $data]);
+    public function attachUser(Professional $professional, int $userId): void
+    {
+        $professional->users()->attach($userId);
+    }
 
-           $data['uid'] = (int)(time() . rand(100, 999));
-           $data['slug'] = Str::arSlug($data['companyName']);
-           $logoPath = $this->professionalImage->uploadImage($logo);
+    public function updateLogo(Professional $professional, UploadedFile $logo): void
+    {
+        $logoPath = $this->professionalImage->uploadImage($logo);
+        $professional->logo = $logoPath;
+        $professional->save();
+    }
 
-           $data['logo'] = $logoPath;
-           $data['offer_execution'] = false;
-
-           $professional = $this->professionalRepository->create($data);
-           $professional->categories()->sync($data['categories']);
-
-           $professional->users()->attach($user->id);
-
-           DB::commit();
-
-           return $professional;
-       } catch (\Throwable $exception) {
-           DB::rollBack();
-           throw $exception;
-       }
+    public function updateSlug(Professional $professional): void
+    {
+        $professional->slug = Str::arSlug($professional->company_name) . '-' . $professional->id . rand(100, 999);
+        $professional->save();
     }
 
     public function getTopRated(): Collection
@@ -82,36 +76,6 @@ class ProfessionalService
     public function search(SearchForm $searchForm): Collection
     {
         return $this->professionalRepository->search($searchForm);
-    }
-
-    /** @throws Throwable */
-    public function update(Professional $professional, array $data, ?UploadedFile $logo = null): Professional
-    {
-        try {
-            DB::beginTransaction();
-
-            unset($data['logo']);
-            $oldImage = $professional->logo;
-            if ($logo) {
-                $data['logo'] = $this->professionalImage->uploadImage($logo);
-            }
-
-            $professional = $this->professionalRepository->update($professional, $data);
-            if (isset($data['categories'])) {
-                $professional->categories()->sync($data['categories']);
-            }
-
-            if ($logo) {
-                $this->professionalImage->removeImage($oldImage);
-            }
-            DB::commit();
-
-            return $professional;
-        } catch (Throwable $exception) {
-            DB::rollBack();
-
-            throw $exception;
-        }
     }
 
     public function ownProject(?Professional $professional, ?Project $project): bool

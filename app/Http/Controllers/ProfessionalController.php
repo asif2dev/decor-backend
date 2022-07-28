@@ -10,6 +10,8 @@ use App\Http\Resources\ProfessionalProfileResource;
 use App\Http\Resources\ProfessionalResource;
 use App\Http\Resources\ProfessionalResourceCollection;
 use App\Modules\SearchEngine\SearchEngineInterface;
+use App\Services\Professional\ProfessionalCreateService;
+use App\Services\Professional\ProfessionalUpdateService;
 use App\Services\ProfessionalService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -21,7 +23,8 @@ class ProfessionalController extends Controller
 {
     public function __construct(
         private ProfessionalService $professionalService,
-        private AuthService $authService,
+        private ProfessionalCreateService $professionalCreateService,
+        private ProfessionalUpdateService $professionalUpdateService,
         private SearchEngineInterface $searchEngine
     ) {
     }
@@ -58,17 +61,8 @@ class ProfessionalController extends Controller
             );
         }
 
-        if ($request->bearerToken()) {
-            $token = PersonalAccessToken::findToken($request->bearerToken());
-            $user = $token->tokenable;
-        } else {
-            $user = $this->authService->register($request->get('phone1'));
-        }
-
-        $logo = $request->file('logo');
-
         return new ProfessionalResource(
-            $this->professionalService->create($user, $request->all(), $logo)
+            $this->professionalCreateService->create($request)
         );
     }
 
@@ -99,8 +93,8 @@ class ProfessionalController extends Controller
             abort(Response::HTTP_FORBIDDEN);
         }
 
-        $professional = $this->professionalService->update($professional, $request->all(), $request->file('logo'));
-
-        return new ProfessionalResource($professional);
+        return new ProfessionalResource(
+            $this->professionalUpdateService->update($request, $professional)
+        );
     }
 }
