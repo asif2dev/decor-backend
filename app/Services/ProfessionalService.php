@@ -12,8 +12,10 @@ use App\Modules\Images\ProjectImage;
 use App\Repositories\ProfessionalRepository;
 use App\Services\Images\ImageHandlerInterface;
 use App\Support\Str;
+use DB;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
+use Throwable;
 
 class ProfessionalService
 {
@@ -26,21 +28,33 @@ class ProfessionalService
         $this->professionalImage = $this->imageHandler->professional();
     }
 
+    /** @throws Throwable */
     public function create(User $user, array $data, UploadedFile $logo): Professional
     {
-        $data['uid'] = (int)(time() . rand(100, 999));
-        $data['slug'] = Str::arSlug($data['companyName']);
-        $logoPath = $this->professionalImage->uploadImage($logo);
+       try {
+           DB::beginTransaction();
 
-        $data['logo'] = $logoPath;
-        $data['offer_execution'] = false;
+           logger()->info('prof data', ['data' => $data]);
 
-        $professional = $this->professionalRepository->create($data);
-        $professional->categories()->sync($data['categories']);
+           $data['uid'] = (int)(time() . rand(100, 999));
+           $data['slug'] = Str::arSlug($data['companyName']);
+           $logoPath = $this->professionalImage->uploadImage($logo);
 
-        $professional->users()->attach($user->id);
+           $data['logo'] = $logoPath;
+           $data['offer_execution'] = false;
 
-        return $professional;
+           $professional = $this->professionalRepository->create($data);
+           $professional->categories()->sync($data['categories']);
+
+           $professional->users()->attach($user->id);
+
+           DB::commit();
+
+           return $professional;
+       } catch (\Throwable $exception) {
+           DB::rollBack();
+           throw $exception;
+       }
     }
 
     public function getTopRated(): Collection
@@ -70,24 +84,34 @@ class ProfessionalService
         return $this->professionalRepository->search($searchForm);
     }
 
+    /** @throws Throwable */
     public function update(Professional $professional, array $data, ?UploadedFile $logo = null): Professional
     {
-        unset($data['logo']);
-        $oldImage = $professional->logo;
-        if ($logo) {
-            $data['logo'] = $this->professionalImage->uploadImage($logo);
-        }
+        try {
+            DB::beginTransaction();
 
-        $professional = $this->professionalRepository->update($professional, $data);
-        if (isset($data['categories'])) {
-            $professional->categories()->sync($data['categories']);
-        }
+            unset($data['logo']);
+            $oldImage = $professional->logo;
+            if ($logo) {
+                $data['logo'] = $this->professionalImage->uploadImage($logo);
+            }
 
-        if ($logo) {
-            $this->professionalImage->removeImage($oldImage);
-        }
+            $professional = $this->professionalRepository->update($professional, $data);
+            if (isset($data['categories'])) {
+                $professional->categories()->sync($data['categories']);
+            }
 
-        return $professional;
+            if ($logo) {
+                $this->professionalImage->removeImage($oldImage);
+            }
+            DB::commit();
+
+            return $professional;
+        } catch (Throwable $exception) {
+            DB::rollBack();
+
+            throw $exception;
+        }
     }
 
     public function ownProject(?Professional $professional, ?Project $project): bool

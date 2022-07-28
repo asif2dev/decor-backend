@@ -45,7 +45,7 @@ class ProfessionalController extends Controller
                 'about' => 'required',
                 'categories' => 'required|array',
                 'workScope' => 'required',
-                'phone1' => 'required|min:11',
+                'phone1' => 'required|min:11|unique:professionals,phone1',
                 'latLng' => 'required',
                 'fullAddress' => 'required',
             ]
