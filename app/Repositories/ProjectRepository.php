@@ -16,8 +16,10 @@ class ProjectRepository extends BaseRepository
     public function create(array $data): Project
     {
         $data = $this->convertToSnakeCase($data);
+        $project = new Project($data);
+        $project->save();
 
-        return Project::create($data);
+        return $project;
     }
 
     public function addProjectImages(Project $project, Professional $professional, array $images): Project

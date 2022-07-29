@@ -10,6 +10,7 @@ use App\Models\Project;
 use App\Models\ProjectTag;
 use App\Models\Tag;
 use App\Services\ProfessionalService;
+use App\Services\Project\ProjectCreateService;
 use App\Services\ProjectService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -18,6 +19,7 @@ class ProjectController extends Controller
 {
     public function __construct(
         private ProjectService $projectService,
+        private ProjectCreateService $projectCreateService,
         private ProfessionalService $professionalService
     ) {
     }
@@ -44,11 +46,9 @@ class ProjectController extends Controller
             abort(403);
         }
 
-        $images = $request->hasFile('images') ? $request->file('images') : [];
-
-        $project = $this->projectService->create($professional, $request->all(), $images);
-
-        return new ProjectResource($project);
+        return new ProjectResource(
+            $this->projectCreateService->create($request, $professional)
+        );
     }
 
     public function getLatestProjects(): ProjectsResourceCollection

@@ -8,7 +8,9 @@ use App\Http\Resources\ProjectImageResource;
 use App\Http\Resources\ProjectImageResourceCollection;
 use App\Models\ProjectImage;
 use App\Modules\SearchEngine\SearchEngineInterface;
+use App\Services\ProfessionalService;
 use App\Services\ProjectImageService;
+use App\Services\ProjectService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -16,7 +18,9 @@ class ProjectImageController extends Controller
 {
     public function __construct(
         private SearchEngineInterface $searchEngine,
-        private ProjectImageService $projectImageService
+        private ProjectImageService $projectImageService,
+        private ProfessionalService $professionalService,
+        private ProjectService $projectService
     ) {
     }
 
@@ -34,6 +38,17 @@ class ProjectImageController extends Controller
         }
 
         return new JsonResponse($result);
+    }
+
+    public function updateImages(Request $request, string $professionalUid, string $projectId)
+    {
+        $project = $this->projectService->getById($projectId);
+        $professional = $this->professionalService->getByUid($professionalUid);
+        if ($this->professionalService->ownProject($professional, $project) === false) {
+            abort(403);
+        }
+
+        $this->projectImageService->updateImages($project, $request->all());
     }
 
     public function getImagesBySlug(string $slug): ProjectImageResource

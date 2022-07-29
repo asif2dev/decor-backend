@@ -10,6 +10,7 @@ use App\Models\ProjectImage;
 use App\Repositories\ProjectRepository;
 use App\Repositories\TagsRepository;
 use App\Services\Images\ImageHandlerInterface;
+use App\Support\Str;
 use Illuminate\Support\Collection;
 
 class ProjectService
@@ -41,6 +42,27 @@ class ProjectService
         $this->projectRepository->addProjectImages($project, $professional, $paths);
 
         return $project;
+    }
+
+    public function syncTags(Project $project, array $tagsIds): void
+    {
+        $project->tags()->sync($tagsIds);
+    }
+
+    public function updateSlug(Project $project): void
+    {
+        $project->slug = Str::arSlug($project->title) . '-' . $project->id . rand(999, 9999);
+        $project->save();
+    }
+
+    public function uploadImages(Project $project, array $images): void
+    {
+        $paths = [];
+        foreach ($images as $image) {
+            $paths[] = $this->projectImage->uploadImage($image);
+        }
+
+        $this->projectRepository->addProjectImages($project, $project->professional, $paths);
     }
 
     public function getLatestProjects(): Collection
