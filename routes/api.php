@@ -84,7 +84,8 @@ Route::get('/spaces/{spaces}/images', [ProjectImageController::class, 'getImages
 Route::get('/tags', [TagController::class, 'getTags']);
 Route::get('/design-types', [DesignTypeController::class, 'getDesignTypes']);
 Route::get('/projects/{uid}/similar', [ProjectController::class, 'getSimilar']);
-Route::get('/projects/{uid}', [ProjectController::class, 'get']);
+Route::get('/projects/byUid/{uid}', [ProjectController::class, 'getByUid']);
+Route::get('/projects/bySlug/{slug}', [ProjectController::class, 'getBySlug']);
 
 Route::post('/professionals', [ProfessionalController::class, 'store']);
 

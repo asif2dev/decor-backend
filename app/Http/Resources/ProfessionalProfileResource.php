@@ -56,6 +56,7 @@ class ProfessionalProfileResource extends JsonResource
 
         return [
             'id' => $project->id,
+            'slug' => $project->slug,
             'title' => $project->title,
             'description' => $project->description,
             'images' => [

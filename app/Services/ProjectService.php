@@ -75,6 +75,11 @@ class ProjectService
         return $this->projectRepository->getById($id);
     }
 
+    public function getBySlug(string $slug): ?Project
+    {
+        return $this->projectRepository->getBySlug($slug);
+    }
+
     public function update(
         Project $project,
         array $data,

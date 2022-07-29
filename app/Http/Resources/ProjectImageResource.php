@@ -2,9 +2,12 @@
 
 namespace App\Http\Resources;
 
+use App\Models\ProjectImage;
 use App\Modules\Images\ProjectImage as ProjectImagePath;
 use App\Modules\Images\ProjectThumb;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Collection;
 
 class ProjectImageResource extends JsonResource
 {
@@ -16,6 +19,10 @@ class ProjectImageResource extends JsonResource
      */
     public function toArray($request)
     {
+        /** @var User $user */
+        $user = $request->user();
+        $images = $user ? $user->favoriteProjectImages()->get() : collect();
+
         return [
             'id' => $this->resource->id,
             'slug' => $this->resource->slug,
@@ -29,7 +36,18 @@ class ProjectImageResource extends JsonResource
             'design_type_id' =>$this->resource->design_type_id,
             'space' => new SpaceResource($this->resource->space),
             'designType' => new DesignTypeResource($this->resource->designType),
-            'professional' => new ProfessionalResource($this->resource->professional)
+            'professional' => new ProfessionalResource($this->resource->professional),
+            'isFavorited' => $user && $this->isFavorited($images, $this->resource),
         ];
+    }
+
+    private function isFavorited(Collection $images, ProjectImage $projectImage): bool
+    {
+        if ($images->isEmpty()) {
+            return false;
+        }
+
+        return $images->filter(fn(ProjectImage $image) => $image->id === $projectImage->id)
+                ->count() !== 0;
     }
 }

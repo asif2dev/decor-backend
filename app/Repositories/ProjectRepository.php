@@ -61,6 +61,11 @@ class ProjectRepository extends BaseRepository
         return Project::find($id);
     }
 
+    public function getBySlug(string $slug): ?Project
+    {
+        return Project::where('slug', $slug)->first();
+    }
+
     public function update(Project $project, array $data): void
     {
         $data = $this->convertToSnakeCase($data);

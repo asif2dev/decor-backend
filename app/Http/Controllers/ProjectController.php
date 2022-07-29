@@ -24,7 +24,7 @@ class ProjectController extends Controller
     ) {
     }
 
-    public function get(int $uid): ProjectResource
+    public function getByUid(int $uid): ProjectResource
     {
         $project = $this->projectService->getById($uid);
         if (!$project) {
@@ -34,9 +34,26 @@ class ProjectController extends Controller
         return new ProjectResource($project);
     }
 
+    public function getBySlug(string $slug): ProjectResource
+    {
+        $project = $this->projectService->getBySlug($slug);
+        if (!$project) {
+            abort(404);
+        }
+
+        return new ProjectResource($project);
+    }
+
     public function getSimilar(string $uid): ProjectsResourceCollection
     {
-        return new ProjectsResourceCollection(Project::get());
+        $projects = (new Project())
+            ->newQuery()
+            ->inRandomOrder()
+            ->skip(0)
+            ->take(3)
+            ->get();
+
+        return new ProjectsResourceCollection($projects);
     }
 
     public function store(Request $request, int $uid): ProjectResource
