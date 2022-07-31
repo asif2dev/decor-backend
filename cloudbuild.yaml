@@ -76,5 +76,5 @@ availableSecrets:
       env: TWILIO_TOKEN
     - versionName: projects/815755308049/secrets/TWILIO_SERVICE_ID/versions/latest
       env: TWILIO_SERVICE_ID
-   - versionName: projects/815755308049/secrets/MEILISEARCH_KEY/versions/latest
+    - versionName: projects/815755308049/secrets/MEILISEARCH_KEY/versions/latest
       env: MEILISEARCH_KEY
