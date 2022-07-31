@@ -12,7 +12,7 @@ use Laravel\Scout\Searchable;
 
 class Professional extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, Searchable;
 
     protected $fillable = [
         'uid',
@@ -60,16 +60,6 @@ class Professional extends Model
 
     public function searchableAs(): string
     {
-        return 'professional_index_uid';
-    }
-
-    public function getScoutKey(): string
-    {
-        return $this->uid;
-    }
-
-    public function getScoutKeyName(): string
-    {
-        return 'uid';
+        return 'professionals_index';
     }
 }

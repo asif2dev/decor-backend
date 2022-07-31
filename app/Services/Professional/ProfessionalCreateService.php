@@ -25,6 +25,8 @@ class ProfessionalCreateService
             function () use ($request, &$professional) {
                 $data = $request->all();
 
+                $data = array_filter($data, fn ($value) => $value !== 'null' && $value !== '');
+
                 $user = UserDetector::fromRequest($request);
                 if (!$user) {
                     $user = $this->authService->register($request->get('phone1'));
@@ -37,6 +39,7 @@ class ProfessionalCreateService
                 $this->professionalService->syncCategories($professional, $data['categories']);
                 $this->professionalService->attachUser($professional,$user->id);
                 $this->professionalService->updateLogo($professional, $request->file('logo'));
+                $professional->searchable();
             }
         );
 

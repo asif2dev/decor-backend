@@ -3,9 +3,9 @@
 namespace App\Http\Resources;
 
 use App\Models\ProjectImage;
+use App\Models\User;
 use App\Modules\Images\ProjectImage as ProjectImagePath;
 use App\Modules\Images\ProjectThumb;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Collection;
 
@@ -17,10 +17,10 @@ class ProjectImageResource extends JsonResource
      * @param  \Illuminate\Http\Request  $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
-    public function toArray($request)
+    public function toArray($request = null)
     {
         /** @var User $user */
-        $user = $request->user();
+        $user = $request?->user();
         $images = $user ? $user->favoriteProjectImages()->get() : collect();
 
         return [
@@ -34,8 +34,8 @@ class ProjectImageResource extends JsonResource
             'palette' => $this->resource->palette,
             'space_id' => $this->resource->space_id,
             'design_type_id' =>$this->resource->design_type_id,
-            'space' => new SpaceResource($this->resource->space),
-            'designType' => new DesignTypeResource($this->resource->designType),
+            'space' => $this->resource->space ? new SpaceResource($this->resource->space): null,
+            'designType' => $this->resource->designType ? new DesignTypeResource($this->resource->designType) : null,
             'professional' => new ProfessionalResource($this->resource->professional),
             'isFavorited' => $user && $this->isFavorited($images, $this->resource),
         ];

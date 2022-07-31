@@ -80,7 +80,7 @@ class ProjectRepository extends BaseRepository
 
     public function delete(Project $project): void
     {
-        Project::where('id', $project->id)->delete();
+        $project->delete();
     }
 
     public function getProjectsHasTag(?string $tag): Collection

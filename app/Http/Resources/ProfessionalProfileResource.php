@@ -17,7 +17,7 @@ class ProfessionalProfileResource extends JsonResource
      *
      * @param Request  $request
      */
-    public function toArray($request): array
+    public function toArray($request = null): array
     {
         return [
             'uid' => $this->resource->uid,

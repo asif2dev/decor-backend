@@ -20,7 +20,7 @@ class ProjectResource extends JsonResource
      *
      * @param Request $request
      */
-    public function toArray($request): array
+    public function toArray($request = null): array
     {
         $result = [
             'id' => $this->resource->id,

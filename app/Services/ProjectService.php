@@ -18,6 +18,7 @@ class ProjectService
     private ImageHandlerInterface $projectImage;
 
     public function __construct(
+        private ProjectImageService $projectImageService,
         private ProjectRepository $projectRepository,
         private ImageHandler $imageHandler,
         private TagsRepository $tagsRepository
@@ -80,40 +81,35 @@ class ProjectService
         return $this->projectRepository->getBySlug($slug);
     }
 
-    public function update(
-        Project $project,
-        array $data,
-        array $images
-    ): void {
-        $deletedImages = $project->images()
-            ->whereNotIn('id', $data['currentImages'] ?? [])
-            ->get();
+    public function update(Project $project, array $data, array $images): void
+    {
+        $this->projectRepository->transaction(function () use ($project, $data, $images) {
+            $deletedImages = $project->images()
+                ->whereNotIn('id', $data['currentImages'] ?? [])
+                ->get();
 
-        foreach ($deletedImages as $image) {
-            /** @var ProjectImage $image*/
-            $this->projectImage->removeImage($image->path);
-        }
-        $project->images()->whereNotIn('id', $data['currentImages'])->delete();
+            $this->projectImageService->deleteImages($deletedImages);
+            $tags = $this->tagsRepository->syncTags($data['tags']);
+            $this->syncTags($project, $tags->pluck('id')->flatten()->toArray());
+            $this->updateSlug($project);
 
-        $tags = $this->tagsRepository->syncTags($data['tags']);
-
-        $project->tags()->sync($tags->pluck('id')->flatten()->toArray());
-
-        if (!empty($images)) {
-            $paths = [];
-            foreach ($images as $image) {
-                $paths[] = $this->projectImage->uploadImage($image);
+            if (!empty($images)) {
+                $this->uploadImages($project, $images);
             }
-            $this->projectRepository->addProjectImages($project, $project->professional, $paths);
-        }
 
-        $this->projectRepository->update($project, $data);
+            $this->projectRepository->update($project, $data);
+        });
+
+        $project->images()->searchable();
+        $project->searchable();
     }
 
     public function delete(Project $project): void
     {
-        $project->images()->delete();
+       $this->projectImageService->deleteImages($project->images);
 
+       $project->images()->unsearchable();
+       $project->unsearchable();
         $this->projectRepository->delete($project);
     }
 

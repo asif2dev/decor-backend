@@ -39,6 +39,9 @@ class ProjectCreateService
             }
         );
 
+        $project->searchable();
+        $project->images()->searchable();
+
         return $project;
     }
 }

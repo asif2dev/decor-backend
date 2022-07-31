@@ -3,6 +3,7 @@
 namespace App\Modules\SearchEngine;
 
 use App\Http\Resources\ProjectImageResource;
+use App\Http\Resources\ProjectResource;
 use App\Models\ProjectImage;
 
 class ProjectImageNormalizer
@@ -11,6 +12,9 @@ class ProjectImageNormalizer
     {
         $projectImage = new ProjectImageResource($projectImage);
 
-        return $projectImage->toArray();
+        $result = $projectImage->toArray();
+        $result['project'] = (new ProjectResource($projectImage->project, false))->toArray();
+
+        return $result;
     }
 }
