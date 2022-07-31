@@ -11,7 +11,7 @@ use Laravel\Scout\Searchable;
 
 class ProjectImage extends Model
 {
-    use HasFactory, Searchable;
+    use HasFactory; //Searchable;
 
     protected $fillable = [
         'path',

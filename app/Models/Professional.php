@@ -12,7 +12,7 @@ use Laravel\Scout\Searchable;
 
 class Professional extends Model
 {
-    use HasFactory, SoftDeletes, Searchable;
+    use HasFactory, SoftDeletes; //Searchable;
 
     protected $fillable = [
         'uid',
