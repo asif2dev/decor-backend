@@ -7,6 +7,8 @@
     "require": {
         "php": "^8.0",
         "ext-dom": "*",
+        "algolia/algoliasearch-client-php": "^3.3",
+        "algolia/scout-extended": "^2.0",
         "clicksend/clicksend-php": "^5.0",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",

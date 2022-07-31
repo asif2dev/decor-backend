@@ -5,14 +5,14 @@ namespace App\Services\Professional;
 use App\Models\Professional;
 use App\Repositories\ProfessionalRepository;
 use App\Services\ImageHandler;
-use App\Services\Images\ProfessionalImage;
+use App\Services\Images\ImageHandlerInterface;
 use App\Services\ProfessionalService;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 
 class ProfessionalUpdateService
 {
-    private ProfessionalImage $professionalImage;
+    private ImageHandlerInterface $professionalImage;
 
     public function __construct(
         private ProfessionalRepository $professionalRepository,
@@ -38,9 +38,13 @@ class ProfessionalUpdateService
                     $this->updateLogo($professional, $request->file('logo'));
                 }
 
+                $this->professionalService->updateSlug($professional);
+
                 $professional->refresh();
             }
         );
+
+        $professional->searchable();
 
         return $professional;
     }

@@ -13,7 +13,7 @@ use Laravel\Scout\Searchable;
 
 class Project extends Model
 {
-    use HasFactory, SoftDeletes; //Searchable;
+    use HasFactory, SoftDeletes, Searchable;
 
     protected $fillable = [
         'title',
