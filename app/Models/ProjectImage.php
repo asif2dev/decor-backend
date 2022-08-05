@@ -53,4 +53,9 @@ class ProjectImage extends Model
     {
         return 'project_images_index';
     }
+
+    public function getScoutKey()
+    {
+        return $this->id;
+    }
 }

@@ -14,6 +14,7 @@ class ProjectImageNormalizer
 
         $result = $projectImage->toArray();
         $result['project'] = (new ProjectResource($projectImage->project, false))->toArray();
+        $result['palette'] = explode(',', $result['palette']);
 
         return $result;
     }
