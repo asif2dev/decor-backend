@@ -12,13 +12,15 @@ class ImageKit implements ImageProviderInterface
             return $path;
         }
 
-        return sprintf(
-            '%s%s?tr=w-%d,h-%d',
-            $this->url,
-            self::getRootPath($path),
-            $width,
-            $height
-        );
+        return self::getRootPath($path);
+
+//        return sprintf(
+//            '%s%s?tr=w-%d,h-%d',
+//            $this->url,
+//            self::getRootPath($path),
+//            $width,
+//            $height
+//        );
     }
 
     public static function getRootPath(string $path): string

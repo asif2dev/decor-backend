@@ -7,6 +7,6 @@ class Local implements ImageProviderInterface
 
     public function generatePath(string $path, int $width, int $height): string
     {
-        return $path;
+        return \Arr::last(explode('uploads', $path));
     }
 }

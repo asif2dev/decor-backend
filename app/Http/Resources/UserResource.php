@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Models\Professional;
+use App\Models\ProjectImage;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -26,14 +27,23 @@ class UserResource extends JsonResource
             'phone' => $this->resource->phone,
             'avatar' => 'https://avatars.dicebear.com/api/initials/' . $name . '.svg?background=%237952B3',
             'professionals' => new ProfessionalResourceCollection($this->resource->professionals),
-            'favorites' => $this->getFavorites($this->resource)
+            'favoritesProfessionals' => $this->getFavoritesProfessionals($this->resource),
+            'favoritesImages' => $this->getFavoritesImages($this->resource)
         ];
     }
 
-    private function getFavorites(User $user): array
+    private function getFavoritesProfessionals(User $user): array
     {
         return $user->favoriteProfessionals
             ->map(fn (Professional $professional) => $professional->uid)
+            ->flatten()
+            ->toArray();
+    }
+
+    private function getFavoritesImages(User $user): array
+    {
+        return $user->favoriteProjectImages
+            ->map(fn (ProjectImage $image) => $image->slug)
             ->flatten()
             ->toArray();
     }
