@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Modules\Images\ImagePathGenerator;
 use App\Modules\Images\ProjectImage as ProjectImagePath;
 use App\Modules\Images\ProjectThumb;
 use Illuminate\Http\Request;
@@ -55,9 +56,12 @@ class ProjectResource extends JsonResource
                 'design_type_id' =>  $image->design_type_id,
                 'palette' =>  $image->palette,
                 'description' =>  $image->description,
-                'src' => new ProjectImagePath($image->path),
-                'slug' => $image->slug,
-                'thumbnail' => new ProjectThumb($image->path)
+                'image' => [
+                    'src' => new ProjectImagePath($image->path),
+                    'thumb' => new ProjectThumb($image->path),
+                    'full' => ImagePathGenerator::generateFullPath($image->path),
+                ],
+                'slug' => $image->slug
             ];
         }
 

@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Models\Project;
+use App\Modules\Images\ImagePathGenerator;
 use App\Modules\Images\ProfessionalLogo;
 use App\Modules\Images\ProjectImage as ProjectImagePath;
 use App\Modules\Images\ProjectThumb;
@@ -24,7 +25,10 @@ class ProfessionalProfileResource extends JsonResource
             'slug' => $this->resource->slug,
             'viewsCount' => $this->resource->views_count,
             'companyName' => $this->resource->company_name,
-            'logo' => new ProfessionalLogo($this->resource->logo),
+            'logo' => [
+                'src' => new ProfessionalLogo($this->resource->logo),
+                'full' => ImagePathGenerator::generateFullPath($this->resource->logo),
+            ],
             'about' => $this->resource->about,
             'services' => $this->resource->services,
             'categories' => new CategoryResourceCollection($this->resource->categories),
@@ -62,8 +66,11 @@ class ProfessionalProfileResource extends JsonResource
             'description' => $project->description,
             'images' => [
                 [
-                    'src' => new ProjectImagePath($image->path),
-                    'thumbnail' => new ProjectThumb($image->path)
+                    'image' => [
+                        'full' => ImagePathGenerator::generateFullPath($image->path),
+                        'src' => new ProjectImagePath($image->path),
+                        'thumb' => new ProjectThumb($image->path)
+                    ]
                 ]
             ]
         ];

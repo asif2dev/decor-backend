@@ -4,7 +4,9 @@ namespace App\Http\Resources;
 
 use App\Models\User;
 use App\Models\ProjectImage;
+use App\Modules\Images\ImagePathGenerator;
 use App\Modules\Images\ProfessionalLogo;
+use App\Modules\Images\ProjectImage as ProjectImagePath;
 use App\Modules\Images\ProjectThumb;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -22,7 +24,11 @@ class MiniProjectImagesResourceCollection extends ResourceCollection
             return [
                 'slug' => $projectImage->slug,
                 'title' => $projectImage->title,
-                'thumbnail' => new ProjectThumb($projectImage->path),
+                'image' => [
+                    'src' => new ProjectImagePath($this->resource->path),
+                    'thumb' => ImagePathGenerator::generateFullPath($this->resource->path),
+                    'full' => ImagePathGenerator::generateFullPath($this->resource->path)
+                ],
                 'space_id' => $projectImage->space_id,
                 'isFavorited' => $user && $this->isFavorited($images, $projectImage),
                 'professional' => [

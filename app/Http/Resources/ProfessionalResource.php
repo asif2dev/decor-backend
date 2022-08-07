@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Modules\Images\ImagePathGenerator;
 use App\Modules\Images\ProfessionalLogo;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -27,7 +28,10 @@ class ProfessionalResource extends JsonResource
             'companyName' => $this->resource->company_name,
             'about' => $this->resource->about,
             'services' => $this->resource->services,
-            'logo' => new ProfessionalLogo($this->resource->logo),
+            'logo' => [
+                'src' => new ProfessionalLogo($this->resource->logo),
+                'full' => ImagePathGenerator::generateFullPath($this->resource->logo),
+            ],
             'categories' => new CategoryResourceCollection($this->resource->categories),
             'phone1' =>  $this->parsePhone($this->resource->phone1),
             'phone2' =>  $this->parsePhone($this->resource->phone2),

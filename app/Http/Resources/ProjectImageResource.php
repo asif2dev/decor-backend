@@ -2,12 +2,10 @@
 
 namespace App\Http\Resources;
 
-use App\Models\ProjectImage;
-use App\Models\User;
+use App\Modules\Images\ImagePathGenerator;
 use App\Modules\Images\ProjectImage as ProjectImagePath;
 use App\Modules\Images\ProjectThumb;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Collection;
 
 class ProjectImageResource extends JsonResource
 {
@@ -24,8 +22,11 @@ class ProjectImageResource extends JsonResource
             'slug' => $this->resource->slug,
             'viewsCount' => $this->resource->views_count,
             'project_id' => $this->resource->project_id,
-            'src' => new ProjectImagePath($this->resource->path),
-            'thumbnail' => new ProjectThumb($this->resource->path),
+            'image' => [
+                'src' => new ProjectImagePath($this->resource->path),
+                'thumb' => new ProjectThumb($this->resource->path),
+                'full' => ImagePathGenerator::generateFullPath($this->resource->path)
+            ],
             'title' => $this->resource->title,
             'description' => $this->resource->description,
             'palette' => $this->resource->palette,

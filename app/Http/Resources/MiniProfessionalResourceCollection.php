@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Models\Professional;
+use App\Modules\Images\ImagePathGenerator;
 use App\Modules\Images\ProfessionalLogo;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -21,7 +22,10 @@ class MiniProfessionalResourceCollection extends ResourceCollection
             'slug' => $professional->slug,
             'companyName' => $professional->company_name,
             'about' => $professional->about,
-            'logo' => new ProfessionalLogo($professional->logo),
+            'logo' => [
+                'src' => new ProfessionalLogo($professional->logo),
+                'full' => ImagePathGenerator::generateFullPath($professional->logo),
+            ],
             'projectsCount' => $professional->projects()->count(),
             'reviewsCount' => $professional->reviews()->count(),
             'rating' => (float)($professional->reviews()->avg('rating') ?? 0)
