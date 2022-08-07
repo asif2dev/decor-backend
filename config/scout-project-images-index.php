@@ -32,7 +32,7 @@ return [
     |
     */
 
-    'customRanking' => null,
+    'customRanking' => ['desc(viewsCount)'],
 
     /*
     |--------------------------------------------------------------------------
@@ -143,7 +143,7 @@ return [
     */
 
     'distinct' => null,
-    'attributeForDistinct' => null,
+    'attributeForDistinct' => 'space.slug',
 
     /*
     |--------------------------------------------------------------------------

@@ -44,6 +44,10 @@ Route::group(
     }
 );
 
+Route::post('views/professional/{slug}', [ProfessionalController::class, 'visited']);
+Route::post('views/image/{slug}', [ProjectImageController::class, 'visited']);
+Route::post('views/project/{slug}', [ProjectController::class, 'visited']);
+
 
 Route::get('categories', [CategoriesController::class, 'getAll']);
 Route::get('inspire', [ProjectImageController::class, 'inspire']);

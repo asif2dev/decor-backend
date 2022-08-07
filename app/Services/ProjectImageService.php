@@ -57,4 +57,10 @@ class ProjectImageService
             $image->delete();
         }
     }
+
+    public function visited(ProjectImage $image): void
+    {
+        $image->views_count++;
+        $image->save();
+    }
 }

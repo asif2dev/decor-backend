@@ -32,7 +32,7 @@ return [
     |
     */
 
-    'customRanking' => null,
+    'customRanking' => ['desc(viewsCount)'],
 
     /*
     |--------------------------------------------------------------------------

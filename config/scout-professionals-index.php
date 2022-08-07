@@ -44,7 +44,7 @@ return [
     |
     */
 
-    'customRanking' => ['desc(rating)', 'desc(projectsCount)', 'desc(reviewsCount)'],
+    'customRanking' => ['desc(rating)', 'desc(projectsCount)', 'desc(reviewsCount)', 'desc(viewsCount)'],
 
     /*
     |--------------------------------------------------------------------------

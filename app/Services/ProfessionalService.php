@@ -86,4 +86,10 @@ class ProfessionalService
 
         return (bool) $professional->projects()->where('id', $project->id)->first();
     }
+
+    public function visited(Professional $professional): void
+    {
+        $professional->views_count++;
+        $professional->save();
+    }
 }

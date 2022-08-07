@@ -141,4 +141,16 @@ class ProjectController extends Controller
 
         return new ProjectsResourceCollection($result);
     }
+
+    public function visited(string $slug): JsonResponse
+    {
+        $project = $this->projectService->getBySlug($slug);
+        if (!$project) {
+            abort(403);
+        }
+
+        $this->projectService->visited($project);
+
+        return new JsonResponse();
+    }
 }

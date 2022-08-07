@@ -69,4 +69,16 @@ class ProjectImageController extends Controller
 
         return new MiniProjectImagesResourceCollection($result);
     }
+
+    public function visited(string $slug): JsonResponse
+    {
+        $image = $this->projectImageService->getImageBySlug($slug);
+        if (!$image) {
+            abort(404);
+        }
+
+        $this->projectImageService->visited($image);
+
+        return new JsonResponse();
+    }
 }

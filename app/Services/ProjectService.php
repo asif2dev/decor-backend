@@ -117,4 +117,10 @@ class ProjectService
     {
         return $this->projectRepository->getProjectsHasTag($tag);
     }
+
+    public function visited(Project $project): void
+    {
+        $project->views_count++;
+        $project->save();
+    }
 }

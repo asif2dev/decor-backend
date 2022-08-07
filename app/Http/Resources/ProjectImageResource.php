@@ -19,13 +19,10 @@ class ProjectImageResource extends JsonResource
      */
     public function toArray($request = null)
     {
-        /** @var User $user */
-        $user = $request?->user();
-        $images = $user ? $user->favoriteProjectImages()->get() : collect();
-
         return [
             'id' => $this->resource->id,
             'slug' => $this->resource->slug,
+            'viewsCount' => $this->resource->views_count,
             'project_id' => $this->resource->project_id,
             'src' => new ProjectImagePath($this->resource->path),
             'thumbnail' => new ProjectThumb($this->resource->path),
@@ -36,18 +33,7 @@ class ProjectImageResource extends JsonResource
             'design_type_id' =>$this->resource->design_type_id,
             'space' => $this->resource->space ? new SpaceResource($this->resource->space): null,
             'designType' => $this->resource->designType ? new DesignTypeResource($this->resource->designType) : null,
-            'professional' => new ProfessionalResource($this->resource->professional),
-            'isFavorited' => $user && $this->isFavorited($images, $this->resource),
+            'professional' => new ProfessionalResource($this->resource->professional)
         ];
-    }
-
-    private function isFavorited(Collection $images, ProjectImage $projectImage): bool
-    {
-        if ($images->isEmpty()) {
-            return false;
-        }
-
-        return $images->filter(fn(ProjectImage $image) => $image->id === $projectImage->id)
-                ->count() !== 0;
     }
 }

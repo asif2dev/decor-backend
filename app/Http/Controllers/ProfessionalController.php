@@ -97,4 +97,16 @@ class ProfessionalController extends Controller
             $this->professionalUpdateService->update($request, $professional)
         );
     }
+
+    public function visited(string $slug): JsonResponse
+    {
+        $professional = $this->professionalService->getBySlug($slug);
+        if ($professional === null) {
+            abort(404);
+        }
+
+        $this->professionalService->visited($professional);
+
+        return new JsonResponse();
+    }
 }
