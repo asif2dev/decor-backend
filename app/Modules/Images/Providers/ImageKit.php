@@ -31,13 +31,18 @@ class ImageKit implements ImageProviderInterface
     {
         if ($width && $height) {
             return sprintf(
-                '%s?tr=w-%d,h-%d,q-100',
-                $path,
+                '%s%s?tr=w-%d,h-%d',
+                $this->url,
+                self::getRootPath($path),
                 $width,
                 $height
             );
         }
 
-        return $path;
+        return sprintf(
+            '%s%s',
+            $this->url,
+            self::getRootPath($path)
+        );
     }
 }
