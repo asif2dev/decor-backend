@@ -27,7 +27,7 @@ class ProfessionalProfileResource extends JsonResource
             'companyName' => $this->resource->company_name,
             'logo' => [
                 'src' => new ProfessionalLogo($this->resource->logo),
-                'full' => ImagePathGenerator::generateFullPath($this->resource->logo),
+                'full' => ImagePathGenerator::generateFullPath($this->resource->logo, 250, 250),
             ],
             'about' => $this->resource->about,
             'services' => $this->resource->services,
@@ -67,7 +67,7 @@ class ProfessionalProfileResource extends JsonResource
             'images' => [
                 [
                     'image' => [
-                        'full' => ImagePathGenerator::generateFullPath($image->path),
+                        'full' => ImagePathGenerator::generateFullPath($image->path, 250, 250),
                         'src' => new ProjectImagePath($image->path),
                         'thumb' => new ProjectThumb($image->path)
                     ]

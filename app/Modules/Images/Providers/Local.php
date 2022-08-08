@@ -10,7 +10,7 @@ class Local implements ImageProviderInterface
         return \Arr::last(explode('uploads', $path));
     }
 
-    public function generateFullPath(string $path, int $width = null, int $height = null): string
+    public function generateFullPath(string $path, ?int $width = 1024, ?int $height = 1024): string
     {
         return sprintf('%s?w-%d,h-%d', $path, $width, $height);
     }

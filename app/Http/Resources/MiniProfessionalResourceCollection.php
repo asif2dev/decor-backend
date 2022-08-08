@@ -24,7 +24,7 @@ class MiniProfessionalResourceCollection extends ResourceCollection
             'about' => $professional->about,
             'logo' => [
                 'src' => new ProfessionalLogo($professional->logo),
-                'full' => ImagePathGenerator::generateFullPath($professional->logo),
+                'full' => ImagePathGenerator::generateFullPath($professional->logo, 250, 250),
             ],
             'projectsCount' => $professional->projects()->count(),
             'reviewsCount' => $professional->reviews()->count(),

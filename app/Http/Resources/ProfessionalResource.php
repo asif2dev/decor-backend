@@ -30,7 +30,7 @@ class ProfessionalResource extends JsonResource
             'services' => $this->resource->services,
             'logo' => [
                 'src' => new ProfessionalLogo($this->resource->logo),
-                'full' => ImagePathGenerator::generateFullPath($this->resource->logo),
+                'full' => ImagePathGenerator::generateFullPath($this->resource->logo, 250, 250),
             ],
             'categories' => new CategoryResourceCollection($this->resource->categories),
             'phone1' =>  $this->parsePhone($this->resource->phone1),

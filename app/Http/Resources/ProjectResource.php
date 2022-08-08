@@ -59,7 +59,7 @@ class ProjectResource extends JsonResource
                 'image' => [
                     'src' => new ProjectImagePath($image->path),
                     'thumb' => new ProjectThumb($image->path),
-                    'full' => ImagePathGenerator::generateFullPath($image->path),
+                    'full' => ImagePathGenerator::generateFullPath($image->path, 800, 800),
                 ],
                 'slug' => $image->slug
             ];

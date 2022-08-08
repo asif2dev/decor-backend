@@ -11,6 +11,11 @@ reset:
 	$(MAKE) migrate-fresh
 	rm -rf public/uploads/**/*
 
+scout-import:
+	cp .env .env.local
+	cp .env.prod .env
+	- php artisan scout:import
+	cp .env.local .env
 
 migrate:
 	docker-compose run --rm --entrypoint "php artisan migrate" app

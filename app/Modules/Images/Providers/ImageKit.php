@@ -27,7 +27,7 @@ class ImageKit implements ImageProviderInterface
         return $path;
     }
 
-    public function generateFullPath(string $path, int $width = 1024, int $height = 1024): string
+    public function generateFullPath(string $path, ?int $width = 1024, ?int $height = 1024): string
     {
         return sprintf(
             '%s%s?tr=w-%d,h-%d',
