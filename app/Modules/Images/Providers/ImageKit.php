@@ -27,22 +27,14 @@ class ImageKit implements ImageProviderInterface
         return $path;
     }
 
-    public function generateFullPath(string $path, int $width = null, int $height = null): string
+    public function generateFullPath(string $path, int $width = 1024, int $height = 1024): string
     {
-        if ($width && $height) {
-            return sprintf(
-                '%s%s?tr=w-%d,h-%d',
-                $this->url,
-                self::getRootPath($path),
-                $width,
-                $height
-            );
-        }
-
         return sprintf(
-            '%s%s',
+            '%s%s?tr=w-%d,h-%d',
             $this->url,
-            self::getRootPath($path)
+            self::getRootPath($path),
+            $width,
+            $height
         );
     }
 }
