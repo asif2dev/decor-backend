@@ -31,6 +31,17 @@ Route::get('/', function () {
     return ['apiVersion' => '1.0.0', 'isLogged' => request()->user() !== null];
 });
 
+Route::get('/test', function() {
+    $prof = \App\Models\Professional::first();
+    $factory = new \App\Http\DTO\Factory();
+
+    dd(
+        json_encode(
+            $factory->fromModel($prof, \App\Http\DTO\Professional::class)
+        )
+    );
+});
+
 Route::get('scrap', function () {
     dd((new \App\Modules\Scraper\MacknMall())->get());
 });
